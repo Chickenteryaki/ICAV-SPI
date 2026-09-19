@@ -32,13 +32,3 @@
   border-radius:0!important;
 }
 
-/* Aircraft-attached loiter trail */
-.progress,.progress-dot{display:none!important}
-.aircraft-trail{
-  fill:none;
-  stroke:rgba(255,255,255,.92);
-  stroke-width:2.4;
-  stroke-linecap:round;
-  vector-effect:non-scaling-stroke;
-  filter:drop-shadow(0 0 4px rgba(255,255,255,.22));
-}
