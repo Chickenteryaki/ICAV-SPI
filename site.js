@@ -1,11 +1,8 @@
-const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const menu=document.querySelector('.menu'),nav=document.querySelector('.nav');
-function closeMenu(){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');}
-menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));});
-nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('open')){closeMenu();menu.focus();}});
-matchMedia('(min-width: 761px)').addEventListener('change',e=>{if(e.matches)closeMenu();});
+menu?.addEventListener('click',()=>{const o=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(o))});
+nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
 document.querySelectorAll('[data-year]').forEach(el=>el.textContent=new Date().getFullYear());
+
 const loiter=document.querySelector('.loiter'),sticky=document.querySelector('.sticky'),track=document.querySelector('#track'),plane=document.querySelector('#plane'),hours=document.querySelector('#hours'),missionHours=document.querySelector('#mission-hours'),localTime=document.querySelector('#local-time'),state=document.querySelector('#state');
 if(loiter&&track&&plane&&hours&&sticky){
  const len=track.getTotalLength();
@@ -27,7 +24,7 @@ if(loiter&&track&&plane&&hours&&sticky){
  const update=()=>{
    const r=loiter.getBoundingClientRect();
    const travel=loiter.offsetHeight-innerHeight;
-   const p=reduceMotion.matches ? 0 : Math.max(0,Math.min(1,-r.top/Math.max(1,travel)));
+   const p=Math.max(0,Math.min(1,-r.top/travel));
    const currentLen=len*p;
    const pt=track.getPointAtLength(currentLen);
    const aheadLen=(currentLen+4)%len;
@@ -36,7 +33,7 @@ if(loiter&&track&&plane&&hours&&sticky){
 
    const hourValue=p*100;
    const h=String(Math.round(hourValue)).padStart(3,'0');
-   const clock=(6+hourValue)%24;
+   const clock=(6+hourValue*(72/100))%24;
    const sky=skyForHour(clock);
    const sunT=clamp((clock-6)/12);
    const moonT=clock>=18?(clock-18)/12:(clock+6)/12;
@@ -69,18 +66,20 @@ if(loiter&&track&&plane&&hours&&sticky){
  };
  let ticking=false;addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(()=>{update();ticking=false});ticking=true}},{passive:true});addEventListener('resize',update);update();
 }
-
-const slides=[...document.querySelectorAll('.home-hero-slide')],dots=[...document.querySelectorAll('.home-hero-dot')],pause=document.querySelector('.slideshow-pause'),hero=document.querySelector('.home-hero');
-let current=0,timer,paused=reduceMotion.matches;
-const captions=['01 / Flight-test team','02 / Pre-flight briefing','03 / The next airframe'];
-function showSlide(i){current=(i+slides.length)%slides.length;slides.forEach((s,n)=>{s.classList.toggle('active',n===current);s.setAttribute('aria-hidden',String(n!==current));});dots.forEach((d,n)=>{d.classList.toggle('active',n===current);d.setAttribute('aria-pressed',String(n===current));});document.querySelector('#slide-caption').textContent=captions[current];}
-function schedule(){clearInterval(timer);if(!paused&&!document.hidden&&slides.length>1)timer=setInterval(()=>showSlide(current+1),6500);}
-if(hero){
- showSlide(0);pause.textContent=paused?'Play':'Pause';pause.setAttribute('aria-label',paused?'Play slideshow':'Pause slideshow');
- dots.forEach((d,i)=>d.addEventListener('click',()=>{showSlide(i);schedule();}));
- pause.addEventListener('click',()=>{paused=!paused;pause.textContent=paused?'Play':'Pause';pause.setAttribute('aria-label',paused?'Play slideshow':'Pause slideshow');schedule();});
- hero.addEventListener('mouseenter',()=>clearInterval(timer));hero.addEventListener('mouseleave',schedule);
- hero.addEventListener('focusin',()=>clearInterval(timer));hero.addEventListener('focusout',schedule);
- document.addEventListener('visibilitychange',schedule);
- reduceMotion.addEventListener('change',()=>{paused=reduceMotion.matches;pause.textContent=paused?'Play':'Pause';pause.setAttribute('aria-label',paused?'Play slideshow':'Pause slideshow');schedule();});schedule();
+const homeHeroSlides=[...document.querySelectorAll('.home-hero-slide')];
+const homeHeroDots=[...document.querySelectorAll('.home-hero-dot')];
+let homeHeroIndex=0;
+let homeHeroTimer;
+function showHomeHeroSlide(i){
+  if(!homeHeroSlides.length)return;
+  homeHeroIndex=(i+homeHeroSlides.length)%homeHeroSlides.length;
+  homeHeroSlides.forEach((s,n)=>s.classList.toggle('active',n===homeHeroIndex));
+  homeHeroDots.forEach((d,n)=>d.classList.toggle('active',n===homeHeroIndex));
 }
+function runHomeHero(){
+  clearInterval(homeHeroTimer);
+  if(homeHeroSlides.length>1)homeHeroTimer=setInterval(()=>showHomeHeroSlide(homeHeroIndex+1),5200);
+}
+homeHeroDots.forEach((d,i)=>d.addEventListener('click',()=>{showHomeHeroSlide(i);runHomeHero();}));
+showHomeHeroSlide(0);
+runHomeHero();
