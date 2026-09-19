@@ -14,3 +14,20 @@
 .footer{padding:26px var(--pad) 32px;border-top:1px solid rgba(255,255,255,.16);display:grid;grid-template-columns:1fr 2fr 1fr;gap:30px;align-items:center;color:var(--muted);font-size:10px}.footer p{margin:0}.footer p:last-child{text-align:right}.footer .brand{color:#fff}
 @media(max-width:850px){.site-header{mix-blend-mode:normal;background:rgba(8,8,8,.86);backdrop-filter:blur(14px)}.brand:before{width:34px;height:34px}.menu{display:block}.nav{position:fixed;top:60px;left:0;right:0;display:none;flex-direction:column;padding:22px var(--pad) 30px;background:#0a0a0a}.nav.open{display:flex}.hero-copy{bottom:105px}.page-hero h1,.page-hero.small h1{font-size:clamp(58px,15vw,100px)}.hero-actions{flex-direction:column;align-items:flex-start;gap:18px}.hero-meta{display:none}.split,.contact-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stat:nth-child(3){border-left:0;padding-left:0}.photo-grid{grid-template-columns:1fr}.photo.tall{min-height:560px}.photo-stack{grid-template-columns:1fr 1fr;grid-template-rows:none}.photo-stack .photo{min-height:300px}.row{grid-template-columns:55px 1fr}.row p{grid-column:2}.people{grid-template-columns:1fr}.person,.person:nth-child(odd),.person:nth-child(even){padding:24px 0;border-left:0}.news-link{grid-template-columns:100px 1fr 20px}.telemetry{grid-template-columns:1fr 1fr;row-gap:12px}.telemetry>div{display:flex;border-right:0;margin-right:0;padding-right:12px}.telemetry>div:nth-child(3),.telemetry>div:nth-child(4){display:none}.hours{top:18%;display:block}.hours>span{display:block;font-size:30vw}.hours-meta{padding-top:0;margin-top:10px}.footer{grid-template-columns:1fr;gap:12px}.footer p:last-child{text-align:left}}
 @media(max-width:540px){.brand:before{display:block}.stats{grid-template-columns:1fr}.stat,.stat+.stat,.stat:nth-child(3){border-left:0;padding-left:0}.photo-stack{grid-template-columns:1fr}.topline span:last-child{display:none}.people .person{grid-template-columns:1fr}.news-link{grid-template-columns:1fr 20px}.news-link span{grid-column:1/-1}.news-link strong{grid-column:1}.timeline-row{grid-template-columns:95px 1fr}}
+/* 2026-09-19 loiter/header corrections */
+.site-header{border:0!important;box-shadow:none!important;outline:0!important}
+.topline{border:0!important;border-top:0!important;box-shadow:none!important;outline:0!important}
+.topline:before,.topline:after{display:none!important;content:none!important}
+.sticky{border:0!important;box-shadow:none!important}
+.progress-dot{fill:rgba(255,255,255,.99);filter:drop-shadow(0 0 10px rgba(255,255,255,.72))}
+.brand:before{
+  content:""!important;
+  width:34px!important;
+  height:34px!important;
+  flex:0 0 34px!important;
+  background-image:url("https://media.licdn.com/dms/image/v2/D4E0BAQFIbZfcc4XFYg/company-logo_200_200/company-logo_200_200/0/1727281264432/imperial_college_aerial_vehicles_solar_plane_initiative_logo?e=2147483647&t=IMzRipu_Z1aTNh6AOTnB_kdzWaoTTX1MsPpLMbB4M5c&v=beta")!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:contain!important;
+  border-radius:0!important;
+}
