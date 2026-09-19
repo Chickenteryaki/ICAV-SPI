@@ -171,3 +171,17 @@
   .team-life-main,.team-review-image{min-height:300px}
   .team-partner-image{min-height:330px}
 }
+
+/* 2026-09-19 enhanced Team image sizing */
+.team-life-grid{grid-template-columns:minmax(0,720px) minmax(280px,1fr);justify-content:space-between}
+.team-life-main{width:100%;max-width:720px;min-height:0;aspect-ratio:16/9}
+.team-review-grid{grid-template-columns:minmax(280px,.8fr) minmax(0,720px);justify-content:space-between}
+.team-review-image{width:100%;max-width:720px;min-height:0;aspect-ratio:4/3}
+.team-partner-grid{grid-template-columns:minmax(0,560px) minmax(300px,1fr);justify-content:space-between}
+.team-partner-image{width:100%;max-width:560px;min-height:0;aspect-ratio:1/1}
+.team-life-main img,.team-review-image img{object-fit:cover}
+.team-partner-image img{object-fit:contain}
+@media(max-width:900px){
+  .team-life-grid,.team-review-grid,.team-partner-grid{grid-template-columns:1fr}
+  .team-life-main,.team-review-image,.team-partner-image{max-width:none}
+}
