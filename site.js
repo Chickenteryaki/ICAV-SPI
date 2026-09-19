@@ -3,22 +3,9 @@ menu?.addEventListener('click',()=>{const o=nav.classList.toggle('open');menu.se
 nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
 document.querySelectorAll('[data-year]').forEach(el=>el.textContent=new Date().getFullYear());
 
-const loiter=document.querySelector('.loiter'),sticky=document.querySelector('.sticky'),track=document.querySelector('#track'),prog=document.querySelector('#progress'),plane=document.querySelector('#plane'),progressDot=document.querySelector('#progress-dot'),hours=document.querySelector('#hours'),missionHours=document.querySelector('#mission-hours'),localTime=document.querySelector('#local-time'),state=document.querySelector('#state');
-if(loiter&&track&&prog&&plane&&hours&&sticky){
+const loiter=document.querySelector('.loiter'),sticky=document.querySelector('.sticky'),track=document.querySelector('#track'),plane=document.querySelector('#plane'),hours=document.querySelector('#hours'),missionHours=document.querySelector('#mission-hours'),localTime=document.querySelector('#local-time'),state=document.querySelector('#state');
+if(loiter&&track&&plane&&hours&&sticky){
  const len=track.getTotalLength();
- const trailLength=len*.16;
- const sampleSegment=(start,end,steps=42)=>{
-   if(end<=start)return '';
-   let d='';
-   for(let i=0;i<=steps;i++){
-     const l=start+(end-start)*(i/steps);
-     const q=track.getPointAtLength(l);
-     d+=(i===0?'M':'L')+q.x.toFixed(2)+' '+q.y.toFixed(2)+' ';
-   }
-   return d;
- };
- prog.removeAttribute('stroke-dasharray');
- prog.removeAttribute('stroke-dashoffset');
  const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
  const mix=(a,b,t)=>a.map((v,i)=>Math.round(v+(b[i]-v)*t));
  const rgb=c=>`rgb(${c[0]},${c[1]},${c[2]})`;
@@ -58,15 +45,6 @@ if(loiter&&track&&prog&&plane&&hours&&sticky){
    const mm=String(Math.floor((clock%1)*60)).padStart(2,'0');
 
    plane.setAttribute('transform',`translate(${pt.x} ${pt.y}) rotate(${ang}) scale(.78)`);
-   if(progressDot){
-     progressDot.setAttribute('cx',pt.x.toFixed(2));
-     progressDot.setAttribute('cy',pt.y.toFixed(2));
-   }
-
-   const visibleTrail=Math.min(trailLength,currentLen);
-   const trailStart=Math.max(0,currentLen-visibleTrail);
-   prog.setAttribute('d',sampleSegment(trailStart,currentLen));
-
    hours.textContent=h;
    if(missionHours)missionHours.textContent=h;
    if(localTime)localTime.textContent=hh+':'+mm;
