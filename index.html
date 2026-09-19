@@ -14,9 +14,47 @@
 <div class="photo-stack"><figure class="photo"><img src="https://res.cloudinary.com/rs-designspark-live/image/upload/c_limit%2Cw_829/f_auto/v1/article/77e55ad4-37df-11f1-944c-42010a000037_WhatsApp_Image_2026-01-17_at_20.18.26_128a12977729f97bd0a0bebc29f178c05717a8a6" alt="ICAV-SPI students building the aircraft"><figcaption class="caption"><span>Build + integration</span><span>RS Student Fund</span></figcaption></figure><figure class="photo"><img src="https://media.licdn.com/dms/image/v2/D4E22AQE0xPGJYLOguA/feedshare-image-high-res/B4EZvsn6QCHIAU-/0/1769201444146?e=2147483647&amp;t=VRuiSU1n_LxQi6UhVd8YLvVtmBejJfV7-Nb5uNYZgGU&amp;v=beta" alt="ICAV-SPI flight operations"><figcaption class="caption"><span>Flight operations</span><span>ICAV-SPI / LinkedIn</span></figcaption></figure></div>
 </div></section>
 
-<section class="loiter" id="mission"><div class="sticky"><div class="sky"></div><div class="topline"><span>Stretch mission · 100 h</span><span>Published benchmark · 82 h</span></div><div class="hours"><span id="hours">000</span><div><strong>HOURS</strong><small>scroll to progress the flight</small></div></div>
-<svg class="orbit" viewBox="0 0 1000 520" aria-label="Aircraft tracing a 100-hour endurance loiter"><path class="track" id="track" d="M95 300 C170 80 420 70 505 250 C590 430 830 435 910 220 C830 75 590 85 505 250 C420 415 175 430 95 300"/><path class="progress" id="progress" d="M95 300 C170 80 420 70 505 250 C590 430 830 435 910 220 C830 75 590 85 505 250 C420 415 175 430 95 300"/><g id="plane" class="plane" transform="translate(95 300)"><path d="M-36 -2 L-8 -5 L7 -31 L13 -31 L11 -5 L40 -1 L43 3 L11 7 L13 30 L7 30 L-8 8 L-36 5 L-45 17 L-49 17 L-45 3 L-49 -12 L-45 -12 Z"/></g></svg>
-<div class="telemetry"><div><span>ENERGY</span><strong id="energy">100%</strong></div><div><span>MISSION</span><strong id="state">DAWN</strong></div><div><span>LOITER</span><strong>ACTIVE</strong></div></div></div></section>
+<section class="loiter" id="mission">
+<div class="sticky">
+<div class="sky"></div>
+<div class="topline"><span>Stretch mission · 100 h</span><span>Published benchmark · 82 h</span></div>
+<div class="hours">
+  <span id="hours">000</span>
+  <div class="hours-meta">
+    <svg class="hours-aircraft" viewBox="0 0 320 120" aria-hidden="true">
+      <path d="M12 60 L112 41 L204 29 L299 42 L307 49 L207 52 L162 60 L207 68 L307 72 L299 80 L204 91 L112 79 L12 60 Z"/>
+      <path d="M145 36 L158 7 L171 7 L165 36 Z"/>
+      <path d="M145 84 L158 113 L171 113 L165 84 Z"/>
+      <path d="M95 49 L67 36 L74 28 L108 43 Z"/>
+      <path d="M95 71 L67 84 L74 92 L108 77 Z"/>
+    </svg>
+    <strong>HOURS</strong>
+    <small>scroll to progress the flight</small>
+  </div>
+</div>
+<svg class="orbit" viewBox="0 0 1600 900" aria-label="Aircraft tracing a 100-hour endurance loiter">
+  <path class="track" id="track" d="M115 496 C244 161 614 108 798 417 C982 726 1332 707 1455 361 C1327 126 978 135 798 417 C617 700 242 706 115 496"/>
+  <path class="progress" id="progress" d="M115 496 C244 161 614 108 798 417 C982 726 1332 707 1455 361 C1327 126 978 135 798 417 C617 700 242 706 115 496"/>
+  <circle class="orbit-node" cx="115" cy="496" r="6"/>
+  <circle class="orbit-node" cx="798" cy="417" r="6"/>
+  <circle class="orbit-node" cx="1455" cy="361" r="6"/>
+  <circle class="orbit-node orbit-node-soft" cx="1336" cy="635" r="5"/>
+  <g id="plane" class="plane" transform="translate(115 496)">
+    <path d="M-72 -5 L-16 -11 L18 -24 L72 -34 L80 -27 L43 -15 L14 -8 L43 -1 L91 4 L101 13 L55 14 L19 11 L-16 8 L-72 5 L-92 21 L-100 17 L-87 6 L-98 -5 L-90 -11 Z"/>
+    <path d="M-11 -13 L18 -48 L30 -47 L22 -13 Z"/>
+    <path d="M-11 10 L18 45 L30 44 L22 10 Z"/>
+    <path d="M-43 -4 L-67 -18 L-61 -24 L-32 -10 Z"/>
+    <path d="M-43 3 L-67 17 L-61 23 L-32 9 Z"/>
+  </g>
+</svg>
+<div class="telemetry">
+  <div class="telemetry-energy"><span>ENERGY</span><div class="energy-meter"><i id="energy-fill"></i></div><strong id="energy">100%</strong></div>
+  <div><span>MISSION</span><strong><b id="mission-hours">000</b> / 100 H</strong></div>
+  <div><span id="state">DAWN</span><strong>LOITER</strong></div>
+  <div class="telemetry-active"><span>ACTIVE</span><i></i></div>
+</div>
+</div>
+</section>
 
 <section class="stats"><div class="stat"><span>Published benchmark</span><strong>82 h</strong></div><div class="stat"><span>Stretch mission</span><strong>100 h</strong></div><div class="stat"><span>Programme size</span><strong>~20</strong></div><div class="stat"><span>Test target</span><strong>1,000+ km</strong></div></section>
 
