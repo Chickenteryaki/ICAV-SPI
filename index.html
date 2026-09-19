@@ -21,12 +21,22 @@
 <div class="hours">
   <span id="hours">000</span>
   <div class="hours-meta">
-    <svg class="hours-aircraft" viewBox="0 0 320 120" aria-hidden="true">
-      <path d="M12 60 L112 41 L204 29 L299 42 L307 49 L207 52 L162 60 L207 68 L307 72 L299 80 L204 91 L112 79 L12 60 Z"/>
-      <path d="M145 36 L158 7 L171 7 L165 36 Z"/>
-      <path d="M145 84 L158 113 L171 113 L165 84 Z"/>
-      <path d="M95 49 L67 36 L74 28 L108 43 Z"/>
-      <path d="M95 71 L67 84 L74 92 L108 77 Z"/>
+    <svg class="hours-aircraft" viewBox="-90 -82 180 164" aria-hidden="true">
+      <g class="uav-body">
+        <path class="uav-fuselage" d="M-74 -3 C-30 -5 43 -5 78 0 C43 5 -30 5 -74 3 Z"/>
+        <path class="uav-wing" d="M-5 -4 L4 -71 L13 -74 L18 -5 Z"/>
+        <path class="uav-wing" d="M-5 4 L4 71 L13 74 L18 5 Z"/>
+        <path class="uav-tail" d="M-53 -4 L-61 -29 L-54 -31 L-43 -5 Z"/>
+        <path class="uav-tail" d="M-53 4 L-61 29 L-54 31 L-43 5 Z"/>
+      </g>
+      <g class="uav-panels">
+        <path d="M1 -20 L15 -20"/>
+        <path d="M2 -35 L14 -35"/>
+        <path d="M3 -50 L13 -50"/>
+        <path d="M1 20 L15 20"/>
+        <path d="M2 35 L14 35"/>
+        <path d="M3 50 L13 50"/>
+      </g>
     </svg>
     <strong>HOURS</strong>
     <small>scroll to progress the flight</small>
@@ -40,11 +50,21 @@
   <circle class="orbit-node" cx="1455" cy="361" r="6"/>
   <circle class="orbit-node orbit-node-soft" cx="1336" cy="635" r="5"/>
   <g id="plane" class="plane" transform="translate(115 496)">
-    <path d="M-72 -5 L-16 -11 L18 -24 L72 -34 L80 -27 L43 -15 L14 -8 L43 -1 L91 4 L101 13 L55 14 L19 11 L-16 8 L-72 5 L-92 21 L-100 17 L-87 6 L-98 -5 L-90 -11 Z"/>
-    <path d="M-11 -13 L18 -48 L30 -47 L22 -13 Z"/>
-    <path d="M-11 10 L18 45 L30 44 L22 10 Z"/>
-    <path d="M-43 -4 L-67 -18 L-61 -24 L-32 -10 Z"/>
-    <path d="M-43 3 L-67 17 L-61 23 L-32 9 Z"/>
+    <g class="uav-body">
+      <path class="uav-fuselage" d="M-68 -3 C-28 -5 40 -5 72 0 C40 5 -28 5 -68 3 Z"/>
+      <path class="uav-wing" d="M-5 -4 L4 -66 L13 -70 L18 -5 Z"/>
+      <path class="uav-wing" d="M-5 4 L4 66 L13 70 L18 5 Z"/>
+      <path class="uav-tail" d="M-49 -4 L-57 -25 L-51 -28 L-40 -5 Z"/>
+      <path class="uav-tail" d="M-49 4 L-57 25 L-51 28 L-40 5 Z"/>
+    </g>
+    <g class="uav-panels">
+      <path d="M1 -19 L15 -19"/>
+      <path d="M2 -33 L14 -33"/>
+      <path d="M3 -47 L13 -47"/>
+      <path d="M1 19 L15 19"/>
+      <path d="M2 33 L14 33"/>
+      <path d="M3 47 L13 47"/>
+    </g>
   </g>
 </svg>
 <div class="telemetry">
