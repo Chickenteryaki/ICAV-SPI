@@ -66,3 +66,20 @@ if(loiter&&track&&plane&&hours&&sticky){
  };
  let ticking=false;addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(()=>{update();ticking=false});ticking=true}},{passive:true});addEventListener('resize',update);update();
 }
+const homeHeroSlides=[...document.querySelectorAll('.home-hero-slide')];
+const homeHeroDots=[...document.querySelectorAll('.home-hero-dot')];
+let homeHeroIndex=0;
+let homeHeroTimer;
+function showHomeHeroSlide(i){
+  if(!homeHeroSlides.length)return;
+  homeHeroIndex=(i+homeHeroSlides.length)%homeHeroSlides.length;
+  homeHeroSlides.forEach((s,n)=>s.classList.toggle('active',n===homeHeroIndex));
+  homeHeroDots.forEach((d,n)=>d.classList.toggle('active',n===homeHeroIndex));
+}
+function runHomeHero(){
+  clearInterval(homeHeroTimer);
+  if(homeHeroSlides.length>1)homeHeroTimer=setInterval(()=>showHomeHeroSlide(homeHeroIndex+1),5200);
+}
+homeHeroDots.forEach((d,i)=>d.addEventListener('click',()=>{showHomeHeroSlide(i);runHomeHero();}));
+showHomeHeroSlide(0);
+runHomeHero();
