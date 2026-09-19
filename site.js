@@ -3,10 +3,24 @@ menu?.addEventListener('click',()=>{const o=nav.classList.toggle('open');menu.se
 nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
 document.querySelectorAll('[data-year]').forEach(el=>el.textContent=new Date().getFullYear());
 
-const loiter=document.querySelector('.loiter'),sticky=document.querySelector('.sticky'),track=document.querySelector('#track'),prog=document.querySelector('#progress'),plane=document.querySelector('#plane'),hours=document.querySelector('#hours'),missionHours=document.querySelector('#mission-hours'),energy=document.querySelector('#energy'),energyFill=document.querySelector('#energy-fill'),state=document.querySelector('#state');
+const loiter=document.querySelector('.loiter'),sticky=document.querySelector('.sticky'),track=document.querySelector('#track'),prog=document.querySelector('#progress'),plane=document.querySelector('#plane'),hours=document.querySelector('#hours'),missionHours=document.querySelector('#mission-hours'),localTime=document.querySelector('#local-time'),state=document.querySelector('#state');
 if(loiter&&track&&prog&&plane&&hours&&sticky){
  const len=track.getTotalLength();prog.style.strokeDasharray=len;prog.style.strokeDashoffset=len;
- const label=p=>p<.18?'DAWN':p<.46?'CLIMB':p<.72?'CRUISE':p<.9?'DUSK':'NIGHT';
- const update=()=>{const r=loiter.getBoundingClientRect(),travel=loiter.offsetHeight-innerHeight,p=Math.max(0,Math.min(1,-r.top/travel)),pt=track.getPointAtLength(len*p),p2=track.getPointAtLength(Math.min(len,len*p+4)),ang=Math.atan2(p2.y-pt.y,p2.x-pt.x)*180/Math.PI,h=String(Math.round(p*100)).padStart(3,'0'),e=Math.round(86+(Math.sin(p*Math.PI*2-1.1)+1)*6.5);plane.setAttribute('transform',`translate(${pt.x} ${pt.y}) rotate(${ang})`);prog.style.strokeDashoffset=len*(1-p);hours.textContent=h;if(missionHours)missionHours.textContent=h;if(energy)energy.textContent=e+'%';if(energyFill)energyFill.style.width=e+'%';if(state)state.textContent=label(p);sticky.style.setProperty('--p',p.toFixed(3))};
+ const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+ const mix=(a,b,t)=>a.map((v,i)=>Math.round(v+(b[i]-v)*t));
+ const rgb=c=>`rgb(${c[0]},${c[1]},${c[2]})`;
+ const skyForHour=hour=>{
+   const daylight=clamp(Math.sin((hour-6)/12*Math.PI));
+   const dawn=Math.exp(-Math.pow((hour-6)/1.7,2));
+   const dusk=Math.exp(-Math.pow((hour-18)/1.7,2));
+   const twilight=Math.max(dawn,dusk);
+   const night=1-daylight;
+   const top=rgb(mix([12,24,48],[117,143,171],daylight));
+   const mid=rgb(mix([22,37,66],[177,193,207],daylight));
+   const bottom=rgb(mix([28,40,64],[103,124,145],daylight));
+   return {daylight,night,twilight,top,mid,bottom};
+ };
+ const phaseForHour=hour=>hour>=5&&hour<8?'DAWN':hour>=8&&hour<17?'DAY':hour>=17&&hour<20?'DUSK':'NIGHT';
+ const update=()=>{const r=loiter.getBoundingClientRect(),travel=loiter.offsetHeight-innerHeight,p=Math.max(0,Math.min(1,-r.top/travel)),pt=track.getPointAtLength(len*p),p2=track.getPointAtLength(Math.min(len,len*p+4)),ang=Math.atan2(p2.y-pt.y,p2.x-pt.x)*180/Math.PI,hourValue=p*100,h=String(Math.round(hourValue)).padStart(3,'0'),clock=(6+hourValue)%24,sky=skyForHour(clock),sunT=clamp((clock-6)/12),moonT=clock>=18?(clock-18)/12:(clock+6)/12,sunX=8+84*sunT,sunY=78-Math.sin(Math.PI*sunT)*66,moonX=8+84*moonT,moonY=75-Math.sin(Math.PI*moonT)*58,hh=String(Math.floor(clock)).padStart(2,'0'),mm=String(Math.floor((clock%1)*60)).padStart(2,'0');plane.setAttribute('transform',`translate(${pt.x} ${pt.y}) rotate(${ang})`);prog.style.strokeDashoffset=len*(1-p);hours.textContent=h;if(missionHours)missionHours.textContent=h;if(localTime)localTime.textContent=hh+':'+mm;if(state)state.textContent=phaseForHour(clock);sticky.style.setProperty('--p',p.toFixed(3));sticky.style.setProperty('--sky-top',sky.top);sticky.style.setProperty('--sky-mid',sky.mid);sticky.style.setProperty('--sky-bottom',sky.bottom);sticky.style.setProperty('--sun-opacity',clock>=5.5&&clock<=18.5?Math.max(.05,sky.daylight+.18*sky.twilight):0);sticky.style.setProperty('--sun-x',sunX+'%');sticky.style.setProperty('--sun-y',sunY+'%');sticky.style.setProperty('--moon-opacity',clock>=17.5||clock<=6.5?Math.max(.12,sky.night):0);sticky.style.setProperty('--moon-x',moonX+'%');sticky.style.setProperty('--moon-y',moonY+'%');sticky.style.setProperty('--stars-opacity',Math.pow(sky.night,2.2)*.9);sticky.style.setProperty('--horizon-opacity',(.12+sky.twilight*.7).toFixed(3));sticky.style.setProperty('--cloud-opacity',(.35+sky.daylight*.55).toFixed(3))};
  let ticking=false;addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(()=>{update();ticking=false});ticking=true}},{passive:true});addEventListener('resize',update);update();
 }
