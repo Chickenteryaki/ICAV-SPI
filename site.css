@@ -205,3 +205,15 @@
   .photo-grid .photo{height:260px}
   .team-testday-photo{height:340px}
 }
+
+/* Compact contact details shared by every page. */
+.footer-compact{grid-template-columns:1fr 1.25fr 1fr auto;align-items:start;gap:24px;padding:28px var(--pad);font-size:12px;line-height:1.6}
+.footer-compact .brand{font-size:17px}
+.footer-compact .brand:before{width:28px!important;height:28px!important;flex-basis:28px!important}
+.footer-identity p{margin-top:8px;font-size:11px}
+.footer-location{font-style:normal}
+.footer-links{display:flex;flex-direction:column;align-items:flex-start;gap:5px;overflow-wrap:anywhere}
+.footer-links a:hover{text-decoration:underline;text-underline-offset:4px;color:#fff}
+.footer-compact .footer-copyright{font-size:11px;white-space:nowrap}
+@media(max-width:850px){.footer-compact{grid-template-columns:1fr 1fr;gap:20px}.footer-compact .footer-copyright{text-align:left}}
+@media(max-width:460px){.footer-compact{column-gap:16px;font-size:11px}.footer-identity{grid-column:1/-1}.footer-compact .footer-copyright{grid-column:1/-1}}
