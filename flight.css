@@ -567,3 +567,67 @@
     background-size:135% 100%;
   }
 }
+
+
+/* 20260922-cloudcover: cloud bank now genuinely masks the scrolling content. */
+.cloud-overlay{
+  position:sticky!important;
+  top:0!important;
+  height:100svh!important;
+  margin-bottom:-100svh!important;
+  z-index:40!important;
+  pointer-events:none!important;
+  overflow:hidden!important;
+}
+
+.cloud-overlay::before{
+  content:""!important;
+  position:absolute!important;
+  left:-3vw!important;
+  right:-3vw!important;
+  bottom:-2px!important;
+  height:clamp(320px,48vh,520px)!important;
+  background:url("assets/cloud-overlay.svg?v=20260922-cloudcover") center bottom/100% 100% no-repeat!important;
+  opacity:1!important;
+  transform:translateZ(0)!important;
+}
+
+/* Entire chapter sits below cloud layer so text and photos disappear behind it. */
+.flight-chapter,
+.flight-chapter .chapter-grid,
+.flight-chapter .chapter-copy,
+.flight-chapter .chapter-photo,
+.goal-chapter,
+.goal-landing-copy,
+.goal-facts{
+  position:relative;
+  z-index:1!important;
+}
+
+/* Aircraft and hour counter remain visible over clouds. */
+.flight-overlay{
+  z-index:50!important;
+}
+
+/* Header remains above the whole animation. */
+.site-header{
+  z-index:80!important;
+}
+
+@media(max-width:900px){
+  .cloud-overlay::before{
+    left:-10vw!important;
+    right:-10vw!important;
+    height:clamp(260px,42vh,420px)!important;
+    background-size:118% 100%!important;
+  }
+}
+
+@media(max-width:520px){
+  .cloud-overlay::before{
+    left:-22vw!important;
+    right:-22vw!important;
+    height:clamp(220px,38vh,350px)!important;
+    background-size:145% 100%!important;
+  }
+}
