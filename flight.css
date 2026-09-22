@@ -515,3 +515,55 @@
   .home-explore .row{min-height:210px;padding:24px}
   .home-explore .row:hover{padding-left:24px}
 }
+
+
+/* 20260922-cloudoverlay: separate bottom cloud-bank overlay.
+   The existing sky/day-night background is untouched.
+   Content scrolls behind this layer; the aircraft remains above it. */
+.flight-clouds{display:none!important}
+
+.cloud-overlay{
+  position:sticky;
+  top:0;
+  height:100svh;
+  margin-bottom:-100svh;
+  pointer-events:none;
+  z-index:2;
+  overflow:hidden;
+}
+
+.cloud-overlay::before{
+  content:"";
+  position:absolute;
+  left:-3vw;
+  right:-3vw;
+  bottom:-2px;
+  height:clamp(230px,34vh,390px);
+  background:url("assets/cloud-overlay.svg?v=20260922-cloudoverlay") center bottom/100% 100% no-repeat;
+  transform:translateZ(0);
+  will-change:transform;
+}
+
+/* Text/photos remain below the cloud bank so they disappear into it while scrolling. */
+.flight-chapter{z-index:1}
+
+/* Aircraft/counter stay above the cloud bank. */
+.flight-overlay{z-index:3}
+
+@media(max-width:900px){
+  .cloud-overlay::before{
+    left:-10vw;
+    right:-10vw;
+    height:clamp(190px,30vh,300px);
+    background-size:115% 100%;
+  }
+}
+
+@media(max-width:520px){
+  .cloud-overlay::before{
+    left:-18vw;
+    right:-18vw;
+    height:clamp(165px,27vh,245px);
+    background-size:135% 100%;
+  }
+}
