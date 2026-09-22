@@ -227,3 +227,17 @@
   background-size:contain!important;
   border-radius:8px!important;
 }
+
+
+/* 2026-09-22: use the actual ICAV SPI LinkedIn company mark in the header/footer. */
+.brand:before{
+  content:""!important;
+  width:34px!important;
+  height:34px!important;
+  flex:0 0 34px!important;
+  background-image:url("https://media.licdn.com/dms/image/v2/D4E0BAQFIbZfcc4XFYg/company-logo_200_200/company-logo_200_200/0/1727281264432/imperial_college_aerial_vehicles_solar_plane_initiative_logo?e=2147483647&t=IMzRipu_Z1aTNh6AOTnB_kdzWaoTTX1MsPpLMbB4M5c&v=beta")!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:contain!important;
+  border-radius:3px!important;
+}
