@@ -1,10 +1,10 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909"><link rel="icon" type="image/png" sizes="200x200" href="https://media.licdn.com/dms/image/v2/D4E0BAQFIbZfcc4XFYg/company-logo_200_200/company-logo_200_200/0/1727281264432/imperial_college_aerial_vehicles_solar_plane_initiative_logo?e=2147483647&t=IMzRipu_Z1aTNh6AOTnB_kdzWaoTTX1MsPpLMbB4M5c&v=beta"><link rel="apple-touch-icon" href="https://media.licdn.com/dms/image/v2/D4E0BAQFIbZfcc4XFYg/company-logo_200_200/company-logo_200_200/0/1727281264432/imperial_college_aerial_vehicles_solar_plane_initiative_logo?e=2147483647&t=IMzRipu_Z1aTNh6AOTnB_kdzWaoTTX1MsPpLMbB4M5c&v=beta"><meta name="description" content="We are ICAV SPI, the Solar Plane Initiative at Imperial College London. We design, build and test solar aircraft to stay airborne for days at a time."><title>ICAV SPI | Solar Plane Initiative</title><link rel="stylesheet" href="site.css?v=20260920-contact"></head><body>
-<header class="site-header"><a class="brand" href="index.html">ICAV <span>SPI</span></a><button class="menu" aria-expanded="false">Menu</button><nav class="nav"><a class="active" href="index.html">Home</a><a href="team.html">Team</a><a href="aircraft.html">Aircraft</a><a href="updates.html">Updates</a><a href="contact.html">Contact</a></nav></header>
-<main>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909"><link rel="icon" type="image/png" sizes="200x200" href="https://media.licdn.com/dms/image/v2/D4E0BAQFIbZfcc4XFYg/company-logo_200_200/company-logo_200_200/0/1727281264432/imperial_college_aerial_vehicles_solar_plane_initiative_logo?e=2147483647&t=IMzRipu_Z1aTNh6AOTnB_kdzWaoTTX1MsPpLMbB4M5c&v=beta"><link rel="apple-touch-icon" href="https://media.licdn.com/dms/image/v2/D4E0BAQFIbZfcc4XFYg/company-logo_200_200/company-logo_200_200/0/1727281264432/imperial_college_aerial_vehicles_solar_plane_initiative_logo?e=2147483647&t=IMzRipu_Z1aTNh6AOTnB_kdzWaoTTX1MsPpLMbB4M5c&v=beta"><meta name="description" content="We are ICAV SPI, the Solar Plane Initiative at Imperial College London. We design, build and test solar aircraft to stay airborne for days at a time."><title>ICAV SPI | Solar Plane Initiative</title><link rel="stylesheet" href="site.css?v=20260922-flight"><link rel="stylesheet" href="flight.css?v=20260922-flight"></head><body>
+<header class="site-header"><a class="brand" href="index.html">ICAV <span>SPI</span></a><button class="menu" type="button" aria-expanded="false" aria-controls="site-navigation">Menu</button><nav class="nav" id="site-navigation" aria-label="Main navigation"><a class="active" href="index.html">Home</a><a href="team.html">Team</a><a href="aircraft.html">Aircraft</a><a href="updates.html">Updates</a><a href="contact.html">Contact</a></nav></header>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<main id="main-content">
 <section class="page-hero home-hero">
 <div class="home-hero-slides">
   <figure class="home-hero-slide active"><img src="assets/images/flight-test-crew.webp" alt="ICAV SPI flight test crew with the demonstrator at Wormwood Scrubs" width="1600" height="1204" fetchpriority="high" decoding="async"><figcaption>Our flight test team</figcaption></figure>
-  <figure class="home-hero-slide"><img src="assets/images/early-demonstrator.webp" alt="An earlier ICAV SPI demonstrator on the airfield" width="2000" height="1500" loading="eager" decoding="async"><figcaption>Our early demonstrator</figcaption></figure>
   <figure class="home-hero-slide"><img src="assets/images/airframe-display.webp" alt="ICAV SPI airframe and solar wing on display outdoors" width="1920" height="1080" loading="eager" decoding="async"><figcaption>Our latest airframe</figcaption></figure>
 </div>
 <div class="shade"></div>
@@ -22,69 +22,106 @@
     <div class="home-hero-dots" aria-label="Homepage slideshow controls">
       <button class="home-hero-dot active" type="button" aria-label="Show slide 1"></button>
       <button class="home-hero-dot" type="button" aria-label="Show slide 2"></button>
-      <button class="home-hero-dot" type="button" aria-label="Show slide 3"></button>
+    </div>
+    <button class="slideshow-toggle" type="button" aria-label="Pause slideshow">Pause</button>
+  </div>
+</div>
+</section>
+
+<div class="flight-story" id="mission" aria-label="The journey towards 100 hours">
+  <div class="flight-stage" aria-hidden="true">
+    <div class="flight-atmosphere"><div class="flight-horizon"></div><div class="flight-stars"></div><div class="flight-sun"></div></div>
+  </div>
+  <div class="flight-overlay" aria-hidden="true">
+    <div class="flight-aircraft">
+      <svg viewBox="0 0 180 210" role="presentation"><g class="aircraft-shape">
+        <path d="M86 29 Q90 12 94 29 L95 73 L173 91 L173 104 L95 94 L94 164 L118 175 L118 183 L93 177 L90 193 L87 177 L62 183 L62 175 L86 164 L85 94 L7 104 L7 91 L85 73 Z"/>
+        <path class="aircraft-panels" d="M17 93 L17 102 M29 90 L29 100 M41 87 L41 98 M53 84 L53 97 M65 81 L65 95 M77 78 L77 94 M103 78 L103 94 M115 81 L115 95 M127 84 L127 97 M139 87 L139 98 M151 90 L151 100 M163 93 L163 102"/>
+      </g></svg>
+    </div>
+    <div class="flight-instrument">
+      <span class="flight-instrument-label">Illustrated flight <span>100 h target</span></span>
+      <strong><span data-flight-hours>000</span><small> / 100 h</small></strong>
+      <span class="flight-clock">Day <b data-flight-day>1</b> <span data-flight-clock>06:00</span></span>
+      <span class="flight-phase" data-flight-phase>Dawn</span>
+      <div class="flight-meter"><i></i></div>
     </div>
   </div>
-</div>
-</section>
 
-<section class="section paper"><div class="split"><h2 class="display">The<br>programme.</h2><div class="body-copy"><p>ICAV SPI grew from a simple endurance challenge: keep a lightweight aircraft airborne for longer.</p><p>Today, our work spans airframe efficiency, energy storage and autonomous flight.</p></div></div></section>
+  <section class="flight-chapter programme-chapter" id="programme" data-flight-stop="0">
+    <div class="chapter-heading"><p class="label">01 / The ambition</p><a href="#flight-goal" class="chapter-skip">Go to the goal ↓</a></div>
+    <div class="chapter-grid">
+      <div class="chapter-copy" data-reveal>
+        <h2 class="display">The<br>programme.</h2>
+        <p class="chapter-lead">A lightweight aircraft. Enough energy to keep flying after sunset.</p>
+        <p>Our demonstrators let us develop the airframe, power systems and flight controls together. What we learn from each flight shapes the aircraft we are building for the endurance attempt.</p>
+        <p>Our January 2026 demonstrator took that work into the air at Wormwood Scrubs. The next step is to bring solar generation and energy storage into a platform built for longer flights.</p>
+        <a class="chapter-link" href="aircraft.html">Explore our aircraft <span>↗</span></a>
+      </div>
+      <figure class="chapter-photo" data-reveal><div class="chapter-photo-window"><img src="assets/images/early-demonstrator.webp" alt="An earlier ICAV SPI demonstrator on the airfield" width="2000" height="1500" loading="lazy" decoding="async"></div><figcaption><span>An earlier demonstrator</span><span>ICAV SPI</span></figcaption></figure>
+    </div>
+  </section>
 
-<section class="loiter" id="mission">
-<div class="sticky">
-<div class="sky"><div class="stars"></div><div class="sun"></div><div class="moon"></div><div class="horizon-glow"></div></div>
-<div class="topline"><span>Our goal · 100 h</span><span>Endurance benchmark · 82 h</span></div>
-<div class="hours">
-  <span id="hours">000</span>
-  <div class="hours-meta">
-    <strong>HOURS</strong>
-    <small>scroll to follow the flight</small>
-  </div>
-</div>
-<svg class="orbit" viewBox="0 0 1600 900" aria-label="Aircraft following a loiter path over a simulated 100 hours">
-  <path class="track" id="track" d="M115 496 C244 161 614 108 798 417 C982 726 1332 707 1455 361 C1327 126 978 135 798 417 C617 700 242 706 115 496"/>
-  
-  <circle class="orbit-node" cx="115" cy="496" r="6"/>
-  <circle class="orbit-node" cx="798" cy="417" r="6"/>
-  <circle class="orbit-node" cx="1455" cy="361" r="6"/>
-  <circle class="orbit-node orbit-node-soft" cx="1336" cy="635" r="5"/>
-  <g id="plane" class="plane" transform="translate(115 496)">
-    <g class="uav-outline">
-      <path class="uav-fuselage" d="M-78 -3 C-34 -4 38 -4 68 -2 L84 0 L68 2 C38 4 -34 4 -78 3 Z"/>
-      <path class="uav-wing" d="M-7 -5 L1 -108 L12 -111 L17 -5 Z"/>
-      <path class="uav-wing" d="M-7 5 L1 108 L12 111 L17 5 Z"/>
-      <path class="uav-tailboom" d="M-72 0 L-45 0"/>
-      <path class="uav-tailplane" d="M-63 -4 L-70 -31 L-60 -33 L-48 -4 Z"/>
-      <path class="uav-tailplane" d="M-63 4 L-70 31 L-60 33 L-48 4 Z"/>
-    </g>
-    <g class="uav-panels">
-      <path d="M-1 -24 L14 -24"/><path d="M0 -45 L13 -45"/><path d="M2 -66 L12 -66"/><path d="M3 -87 L11 -87"/>
-      <path d="M-1 24 L14 24"/><path d="M0 45 L13 45"/><path d="M2 66 L12 66"/><path d="M3 87 L11 87"/>
-    </g>
-  </g>
-</svg>
-<div class="telemetry">
-  <div><span>MISSION</span><strong><b id="mission-hours">000</b> / 100 H</strong></div>
-  <div><span>LOCAL TIME</span><strong id="local-time">06:00</strong></div>
-  <div><span id="state">DAWN</span><strong>LOITER</strong></div>
-  <div class="telemetry-active"><span>ACTIVE</span><i></i></div>
-</div>
-</div>
-</section>
+  <section class="flight-chapter energy-chapter" id="daylight" data-flight-stop="6">
+    <div class="chapter-heading"><p class="label">02 / Daylight</p><span class="chapter-note">Solar generation</span></div>
+    <div class="chapter-grid chapter-reverse">
+      <figure class="chapter-photo" data-reveal><div class="chapter-photo-window"><img src="assets/images/solar-cell-test.webp" alt="Solar cells connected to a multimeter during an outdoor test" width="1500" height="2000" loading="lazy" decoding="async"></div><figcaption><span>Measuring solar cell output</span><span>On the ground</span></figcaption></figure>
+      <div class="chapter-copy" data-reveal>
+        <h2 class="display">Every watt.<br>Every gram.</h2>
+        <p class="chapter-lead">The energy collected during the day has to carry the aircraft through the night.</p>
+        <p>Wing shape, structural weight and power demand all affect how long we can stay airborne. We develop them together, alongside the solar cells and batteries.</p>
+        <div class="chapter-detail"><span>In daylight</span><p>Generate power for flight and store enough energy for the hours without sunlight.</p></div>
+        <a class="chapter-link" href="aircraft.html#systems">Explore the systems <span>↗</span></a>
+      </div>
+    </div>
+  </section>
 
-<section class="stats"><div class="stat"><span>Endurance benchmark</span><strong>82 h</strong></div><div class="stat"><span>Our goal</span><strong>100 h</strong></div><div class="stat"><span>Our team</span><strong>~20</strong></div><div class="stat"><span>Distance target</span><strong>1,000+ km</strong></div></section>
+  <section class="flight-chapter night-chapter" id="overnight" data-flight-stop="18">
+    <div class="chapter-heading"><p class="label">03 / Through the night</p><span class="chapter-note">Stored energy</span></div>
+    <div class="chapter-grid">
+      <div class="chapter-copy" data-reveal>
+        <h2 class="display">Until<br>sunrise.</h2>
+        <p class="chapter-lead">After sunset, the aircraft must fly on the energy it has stored.</p>
+        <p>Battery capacity is only part of the problem. The aircraft also needs to use as little power as possible, with flight controls that keep it on course.</p>
+        <p>For a flight lasting several days, that balance has to hold through each night and leave enough daylight to recharge.</p>
+        <div class="chapter-detail"><span>The design challenge</span><p>Collect, store, conserve. Then repeat the cycle.</p></div>
+      </div>
+      <figure class="chapter-photo" data-reveal><div class="chapter-photo-window"><img src="assets/images/airframe-electronics.webp" alt="Hands working on the electronics inside an ICAV SPI airframe" width="1500" height="2000" loading="lazy" decoding="async"></div><figcaption><span>Inside the airframe</span><span>Electronics and integration</span></figcaption></figure>
+    </div>
+  </section>
 
-<section class="section white"><div class="label">Explore ICAV SPI</div><div class="rows">
-<a class="row" href="team.html"><span class="num">01</span><h3>Team</h3><p>People, roles and subteams.</p></a>
-<a class="row" href="aircraft.html"><span class="num">02</span><h3>Aircraft</h3><p>Design, systems and specifications.</p></a>
-<a class="row" href="updates.html"><span class="num">03</span><h3>Updates</h3><p>From the workshop, flight line and events.</p></a>
-<a class="row" href="contact.html"><span class="num">04</span><h3>Contact</h3><p>Join, partner or get in touch.</p></a>
+  <section class="flight-chapter people-chapter" id="people" data-flight-stop="24">
+    <div class="chapter-heading"><p class="label">04 / The people behind the aircraft</p><span class="chapter-note">Imperial College London</span></div>
+    <div class="chapter-grid chapter-reverse">
+      <figure class="chapter-photo" data-reveal><div class="chapter-photo-window"><img src="assets/images/flight-day-assembly.webp" alt="ICAV SPI students fitting the aircraft nose and checking the assembly on test day" width="1155" height="1536" loading="lazy" decoding="async"></div><figcaption><span>Assembly on the flying field</span><span>January 2026</span></figcaption></figure>
+      <div class="chapter-copy" data-reveal>
+        <h2 class="display">Built by us.<br>Flown by us.</h2>
+        <p class="chapter-lead">Around 20 students, working across the whole aircraft.</p>
+        <p>Our work brings together aerodynamics, structures, electronics and flight operations. We take the aircraft from design reviews and workshop assembly to the flying field.</p>
+        <p>Flight days put those decisions to the test. The data comes back to the team and helps us work out what to change next.</p>
+        <a class="chapter-link" href="team.html">Meet the team <span>↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="flight-chapter goal-chapter" id="flight-goal" data-flight-stop="82">
+    <div class="chapter-heading"><p class="label">05 / The target</p><span class="chapter-note">Four days. Four nights. Still flying.</span></div>
+    <div class="goal-layout" data-reveal><div><h2 class="goal-number">100<span>hours.</span></h2><p class="goal-caption">Our continuous flight target</p></div><div class="goal-copy"><p class="chapter-lead">Beyond the benchmark.<br>Towards a longer flight.</p><p>Our ambition is 100 hours in the air. Each demonstrator and test flight brings us closer to understanding what the record aircraft will need.</p><p class="benchmark-note">The reference flight: AtlantikSolar, 81.5 hours in 2015, in the under 50 kg class. <a href="https://asl.ethz.ch/the-lab/asl-news/2015/07/asls-atlantiksolar-uav-breaks-world-endurance-record-with-81-hour-flight.html" target="_blank" rel="noreferrer">Read the ETH report ↗</a></p><a class="chapter-link" href="contact.html">Work with us <span>↗</span></a></div></div>
+    <div class="goal-facts"><div><span>Our team</span><strong>~20</strong></div><div><span>Cumulative flight testing target</span><strong>1,000+ km</strong></div><div><span>January 2026 demonstrator</span><strong>4.2 m wingspan</strong></div></div>
+  </section>
+</div>
+
+<section class="section black home-next"><div class="split"><div><p class="label">2026 programme</p><h2 class="display">Our next<br>aircraft.</h2></div><div><p class="lead">The next airframe brings together what we have learned from the demonstrator, with system integration and ground testing ahead of flight.</p><div class="timeline"><div class="timeline-row"><span>On display</span><strong>Great Exhibition Road Festival</strong></div><div class="timeline-row"><span>Development</span><strong>System integration and ground testing</strong></div><div class="timeline-row"><span>Next milestone</span><strong>Flight preparations</strong></div></div><a class="text-link" href="updates.html">Follow our progress →</a></div></div></section>
+
+<section class="section white home-explore"><div class="label">Explore ICAV SPI</div><div class="rows">
+<a class="row" href="team.html"><span class="num">01</span><h3>Team</h3><p>Meet the students behind the aircraft and see how we work together.</p></a>
+<a class="row" href="aircraft.html"><span class="num">02</span><h3>Aircraft</h3><p>The demonstrator, its systems and the decisions behind the design.</p></a>
+<a class="row" href="updates.html"><span class="num">03</span><h3>Updates</h3><p>Flight reports, workshop progress and the next steps for the programme.</p></a>
+<a class="row" href="contact.html"><span class="num">04</span><h3>Contact</h3><p>Talk to us about joining the team, supporting the project or working together.</p></a>
 </div></section>
-
-<section class="section black"><div class="split"><div><p class="label">2026 programme</p><h2 class="display">Our next<br>aircraft.</h2></div><div class="timeline"><div class="timeline-row"><span>Great Exhibition Road Festival</span><strong>Our new airframe on display</strong></div><div class="timeline-row"><span>August 2026</span><strong>System integration and ground testing</strong></div><div class="timeline-row"><span>September 2026</span><strong>First flight preparations</strong></div></div></div></section>
 </main><footer class="footer footer-compact">
   <div class="footer-identity"><a class="brand" href="index.html">ICAV <span>SPI</span></a><p>Solar Plane Initiative</p></div>
   <address class="footer-location">Department of Aeronautics<br>Imperial College London<br>South Kensington, London</address>
   <div class="footer-links"><a href="contact.html">Contact us</a><a href="https://www.linkedin.com/company/icavspi-solar-plane-initiative/" target="_blank" rel="noreferrer">LinkedIn ↗</a></div>
   <p class="footer-copyright">© <span data-year></span> ICAV SPI</p>
-</footer><script src="site.js?v=20260919-9"></script></body></html>
+</footer><script src="site.js?v=20260922-flight"></script></body></html>
