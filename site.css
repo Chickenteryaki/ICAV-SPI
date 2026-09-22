@@ -256,3 +256,21 @@
   border-radius:0!important;
   overflow:visible!important;
 }
+
+/* 2026-09-22: corrected SPI logo asset and guaranteed visible header mark */
+.site-header .brand:before,
+.footer .brand:before{
+  content:""!important;
+  display:block!important;
+  width:38px!important;
+  height:38px!important;
+  min-width:38px!important;
+  flex:0 0 38px!important;
+  background-image:url("assets/spi-logo.png?v=20260922-spifix2")!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:contain!important;
+  opacity:1!important;
+  visibility:visible!important;
+  border-radius:0!important;
+}
