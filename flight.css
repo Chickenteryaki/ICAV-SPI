@@ -631,3 +631,34 @@
     background-size:145% 100%!important;
   }
 }
+
+
+/* 20260922-cloudthin: slimmer two-layer cloud bank with some transparency. */
+.cloud-overlay::before{
+  left:-4vw!important;
+  right:-4vw!important;
+  bottom:-2px!important;
+  height:clamp(210px,31vh,330px)!important;
+  background:url("assets/cloud-overlay.svg?v=20260922-cloudthin") center bottom/100% 100% no-repeat!important;
+  opacity:.86!important;
+}
+
+@media(max-width:900px){
+  .cloud-overlay::before{
+    left:-10vw!important;
+    right:-10vw!important;
+    height:clamp(175px,28vh,265px)!important;
+    background-size:118% 100%!important;
+    opacity:.84!important;
+  }
+}
+
+@media(max-width:520px){
+  .cloud-overlay::before{
+    left:-18vw!important;
+    right:-18vw!important;
+    height:clamp(150px,25vh,225px)!important;
+    background-size:140% 100%!important;
+    opacity:.82!important;
+  }
+}
