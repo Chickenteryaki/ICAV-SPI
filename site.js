@@ -128,10 +128,8 @@
     story.style.setProperty('--aircraft-scale', scale.toFixed(3));
     story.style.setProperty('--trail-opacity', trail.toFixed(3));
     story.style.setProperty('--landing', landing.toFixed(3));
-    const cloudPhase = progress - .5;
-    story.style.setProperty('--cloud-back-x', `${(cloudPhase * -70).toFixed(1)}px`);
-    story.style.setProperty('--cloud-mid-x', `${(cloudPhase * 125).toFixed(1)}px`);
-    story.style.setProperty('--cloud-front-x', `${(cloudPhase * -190).toFixed(1)}px`);
+    story.style.setProperty('--cloud-drift', `${(Math.sin(position / 780) * 46).toFixed(1)}px`);
+    story.style.setProperty('--cloud-rise', `${(Math.sin(position / 920) * 8).toFixed(1)}px`);
 
     if (hourLabel) hourLabel.textContent = String(Math.floor(elapsed + .0001)).padStart(3, '0');
   }
