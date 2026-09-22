@@ -1,61 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 480" preserveAspectRatio="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 560" preserveAspectRatio="none">
   <defs>
-    <linearGradient id="back" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0a758a"/>
-      <stop offset="1" stop-color="#16a8c0"/>
-    </linearGradient>
-    <linearGradient id="mid" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#45bdd0"/>
-      <stop offset="1" stop-color="#6bc9d9"/>
-    </linearGradient>
-    <linearGradient id="pale" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#9edce5"/>
-      <stop offset="1" stop-color="#c8e9ee"/>
-    </linearGradient>
-    <linearGradient id="front" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#edf5f5"/>
-      <stop offset="1" stop-color="#f7fbfb"/>
-    </linearGradient>
-    <filter id="soft" x="-5%" y="-8%" width="110%" height="116%">
-      <feGaussianBlur stdDeviation="1.15"/>
+    <filter id="soft" x="-6%" y="-8%" width="112%" height="116%">
+      <feGaussianBlur stdDeviation="1.25"/>
     </filter>
   </defs>
-
   <g filter="url(#soft)">
-    <path d="M0 250
-      C70 190 150 195 205 252
-      C270 155 410 150 492 245
-      C555 190 640 195 700 270
-      C775 150 930 145 1015 255
-      C1090 175 1200 180 1270 270
-      C1350 160 1490 155 1600 235
-      L1600 480 L0 480 Z" fill="url(#back)"/>
-
-    <path d="M0 310
-      C75 235 180 245 245 320
-      C325 225 455 225 540 320
-      C615 250 725 250 795 330
-      C875 220 1015 220 1100 325
-      C1170 245 1295 245 1365 330
-      C1430 260 1525 250 1600 305
-      L1600 480 L0 480 Z" fill="url(#mid)"/>
-
-    <path d="M0 370
-      C75 300 185 310 245 385
-      C315 295 445 300 520 385
-      C600 305 720 300 795 390
-      C870 295 1005 300 1080 390
-      C1160 305 1280 305 1350 390
-      C1420 315 1525 310 1600 360
-      L1600 480 L0 480 Z" fill="url(#pale)"/>
-
-    <path d="M0 420
-      C80 350 195 360 255 435
-      C335 345 465 355 535 435
-      C620 350 745 355 815 440
-      C900 350 1035 355 1105 440
-      C1190 355 1310 360 1380 440
-      C1450 375 1535 370 1600 410
-      L1600 480 L0 480 Z" fill="url(#front)"/>
+    <path d="M0 245
+      C70 185 150 190 210 252
+      C280 150 420 150 500 245
+      C565 188 650 195 710 270
+      C790 145 945 145 1030 255
+      C1105 175 1215 180 1285 270
+      C1365 155 1505 155 1600 230
+      L1600 560 L0 560 Z" fill="#0b788d"/>
+    <path d="M0 320
+      C80 235 185 245 250 325
+      C330 220 465 225 550 325
+      C625 248 735 250 810 334
+      C890 220 1035 220 1120 328
+      C1195 245 1315 245 1385 335
+      C1450 260 1535 252 1600 304
+      L1600 560 L0 560 Z" fill="#53bfd0"/>
+    <path d="M0 400
+      C85 300 195 312 255 395
+      C330 292 460 300 535 395
+      C615 302 735 302 815 402
+      C895 292 1035 300 1110 402
+      C1190 302 1310 305 1380 400
+      C1455 312 1540 308 1600 362
+      L1600 560 L0 560 Z" fill="#a8dde5"/>
+    <path d="M0 468
+      C85 365 205 375 265 465
+      C345 355 480 365 550 468
+      C635 365 760 368 835 475
+      C920 365 1060 370 1130 475
+      C1215 370 1335 372 1405 475
+      C1475 390 1550 385 1600 430
+      L1600 560 L0 560 Z" fill="#eef6f6"/>
   </g>
 </svg>
