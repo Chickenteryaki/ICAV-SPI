@@ -240,3 +240,19 @@
   background-size:contain!important;
   border-radius:0!important;
 }
+
+/* 2026-09-22: use the supplied SPI PNG directly; avoids SVG clipping. */
+.brand:before{
+  content:""!important;
+  display:block!important;
+  width:38px!important;
+  height:38px!important;
+  min-width:38px!important;
+  flex:0 0 38px!important;
+  background-image:url("assets/spi-logo.png?v=20260922-spifix")!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:contain!important;
+  border-radius:0!important;
+  overflow:visible!important;
+}
