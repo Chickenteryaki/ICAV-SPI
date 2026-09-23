@@ -745,3 +745,33 @@
   .cloud-overlay::before,
   .cloud-overlay::after{animation:none!important}
 }
+
+
+/* 20260923-mobile-cloudfix: completely remove the decorative cloud layer on phone/narrow layouts. */
+@media(max-width:900px){
+  .cloud-overlay{
+    display:none!important;
+    position:absolute!important;
+    width:0!important;
+    height:0!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+    visibility:hidden!important;
+    opacity:0!important;
+    pointer-events:none!important;
+  }
+
+  .cloud-overlay::before,
+  .cloud-overlay::after{
+    content:none!important;
+    display:none!important;
+    width:0!important;
+    height:0!important;
+    background:none!important;
+    animation:none!important;
+    transform:none!important;
+    opacity:0!important;
+  }
+}
