@@ -670,3 +670,78 @@
     display:none!important;
   }
 }
+
+
+/* 20260923-cloudmotion: asymmetric white cloud bank with independent motion. */
+@media(min-width:768px){
+  .cloud-overlay{
+    display:block!important;
+    position:sticky!important;
+    top:0!important;
+    height:100svh!important;
+    margin-bottom:-100svh!important;
+    z-index:40!important;
+    pointer-events:none!important;
+    overflow:hidden!important;
+  }
+
+  .cloud-overlay::before,
+  .cloud-overlay::after{
+    content:""!important;
+    position:absolute!important;
+    pointer-events:none!important;
+    background-repeat:no-repeat!important;
+    background-position:center bottom!important;
+    transform-origin:50% 100%!important;
+    will-change:transform,background-position,opacity!important;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.35) 9%,#000 28%,#000 100%)!important;
+    mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.35) 9%,#000 28%,#000 100%)!important;
+  }
+
+  .cloud-overlay::before{
+    left:-14vw!important;
+    right:-14vw!important;
+    bottom:4vh!important;
+    height:clamp(145px,21vh,235px)!important;
+    background-image:url("assets/cloud-back.svg?v=20260923-cloudmotion")!important;
+    background-size:112% 100%!important;
+    opacity:.42!important;
+    filter:blur(.7px)!important;
+    transform:translate3d(calc(var(--cloud-drift,0px) * .28),calc(var(--cloud-rise,0px) * .35),0) scale(1.02)!important;
+    animation:cloudBackLive 28s ease-in-out infinite alternate!important;
+  }
+
+  .cloud-overlay::after{
+    left:-12vw!important;
+    right:-12vw!important;
+    bottom:-2px!important;
+    height:clamp(175px,26vh,285px)!important;
+    background-image:url("assets/cloud-front.svg?v=20260923-cloudmotion")!important;
+    background-size:118% 100%!important;
+    opacity:.77!important;
+    filter:blur(.25px)!important;
+    transform:translate3d(calc(var(--cloud-drift,0px) * -.18),calc(var(--cloud-rise,0px) * -.22),0) scale(1.015)!important;
+    animation:cloudFrontLive 18s ease-in-out infinite alternate!important;
+  }
+
+  @keyframes cloudBackLive{
+    0%{background-position:47% 100%;opacity:.37}
+    45%{background-position:51% 99%;opacity:.44}
+    100%{background-position:55% 100%;opacity:.39}
+  }
+
+  @keyframes cloudFrontLive{
+    0%{background-position:54% 100%;opacity:.72}
+    50%{background-position:49% 98%;opacity:.80}
+    100%{background-position:45% 100%;opacity:.75}
+  }
+}
+
+@media(max-width:767px){
+  .cloud-overlay{display:none!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .cloud-overlay::before,
+  .cloud-overlay::after{animation:none!important}
+}
