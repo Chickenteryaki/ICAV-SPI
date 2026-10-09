@@ -285,7 +285,10 @@
     story.style.setProperty('--aircraft-scale', scale.toFixed(3));
     story.style.setProperty('--trail-opacity', trail.toFixed(3));
     story.style.setProperty('--landing', landing.toFixed(3));
-    story.dataset.flightScene = from.scene;
+    let visibleChapter = 0;
+    const viewPosition = position + innerHeight * .45;
+    while (visibleChapter < chapters.length - 1 && viewPosition >= markers[visibleChapter + 1].y) visibleChapter++;
+    story.dataset.flightScene = chapters[visibleChapter].id;
     story.style.setProperty('--cloud-drift', `${(Math.sin(position / 620) * 68).toFixed(1)}px`);
     story.style.setProperty('--cloud-rise', `${(Math.sin(position / 510) * 7 + Math.cos(position / 980) * 3).toFixed(1)}px`);
 
