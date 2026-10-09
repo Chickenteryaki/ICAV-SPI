@@ -6,7 +6,7 @@
 .motion-enabled .page-hero [data-reveal="copy"].is-revealed{animation-duration:.55s}
 
 /* The aircraft stays inside the measured space between the two columns. */
-.flight-aircraft{width:min(86px,6.3vw);height:auto;aspect-ratio:180/210;opacity:var(--aircraft-opacity,1)}
+.flight-aircraft{left:0;top:0;width:var(--aircraft-size,76px);height:auto;aspect-ratio:180/210;opacity:var(--aircraft-opacity,0);transform:translate3d(var(--aircraft-x,0px),var(--aircraft-y,0px),0) translate(-50%,-50%) rotate(var(--aircraft-bank,180deg));will-change:transform;transition:none}
 .flight-panel-glint{opacity:0;transition:opacity .6s ease}
 .flight-story[data-flight-scene="daylight"] .flight-panel-glint{opacity:calc(var(--flight-daylight) * .66)}
 .panel-light{animation:panel-light-pass 14s linear infinite;animation-play-state:paused}
@@ -42,8 +42,8 @@
   .motion-enabled .flight-aircraft svg{animation:aircraft-idle 8s ease-in-out infinite;animation-play-state:paused}
   .motion-enabled .flight-running .flight-aircraft svg{animation-play-state:running}
   @keyframes aircraft-idle{
-    0%,100%{transform:translateY(0) rotate(-.7deg)}
-    50%{transform:translateY(3px) rotate(.7deg)}
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(2px)}
   }
   .motion-enabled .depth-photo img{transform:translate3d(0,var(--photo-drift,0px),0) scale(1.055)}
 
@@ -73,26 +73,20 @@
   }
 }
 
-/* A selectable schematic uses the same fine rules and graphite palette. */
-.systems-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(48px,7vw,110px);align-items:start}
-.systems-sketch{position:sticky;top:110px;margin:0;min-width:0;background:#f2f1ec;border:1px solid #e5e4df;padding:24px}
-.systems-sketch svg{display:block;width:100%;height:auto;color:#263540;overflow:visible}
-.diagram-guides{fill:none;stroke:currentColor;stroke-width:.55;opacity:.12;stroke-dasharray:3 8}
-.diagram-outline{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
-.diagram-layer{fill:none;stroke:currentColor;stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round;opacity:.1;transition:opacity .35s ease}
-.diagram-panel{fill:currentColor;fill-opacity:.07}
-.diagram-panel-grid{stroke:none}
-.diagram-energy{color:#936637}
-.diagram-battery{fill:#f2f1ec}
-.diagram-energy-link{stroke-dasharray:3 5}
-.diagram-controls circle{fill:#f2f1ec}
+/* System highlights sit over the team's original design render. */
+.systems-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(40px,5vw,80px);align-items:start}
+.systems-sketch{position:sticky;top:110px;margin:0;min-width:0;background:#fff;border:1px solid #e5e4df;padding:24px}
+.systems-render{position:relative;aspect-ratio:1600/701;margin:28px 0 40px}
+.systems-render img,.systems-render svg{display:block;width:100%;height:100%;object-fit:contain}
+.systems-render svg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.diagram-layer{fill:none;stroke:#b58f50;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .35s ease}
+.diagram-layer>*{vector-effect:non-scaling-stroke}
+.diagram-layer circle,.diagram-layer ellipse{fill:#fff;fill-opacity:.08}
+.diagram-layer .system-boom{stroke-width:2}
 .systems-sketch[data-active-system="aerodynamics"] [data-system-layer="aerodynamics"],
 .systems-sketch[data-active-system="structures"] [data-system-layer="structures"],
 .systems-sketch[data-active-system="energy"] [data-system-layer="energy"],
 .systems-sketch[data-active-system="controls"] [data-system-layer="controls"]{opacity:1}
-.motion-enabled .systems-sketch.is-revealed .diagram-outline path{animation:diagram-draw 1.3s cubic-bezier(.22,.61,.36,1) both}
-.motion-enabled .systems-sketch.is-revealed .diagram-layer path[pathLength="1"]{animation:diagram-draw 1.3s cubic-bezier(.22,.61,.36,1) .12s both}
-@keyframes diagram-draw{from{stroke-dasharray:1;stroke-dashoffset:1}to{stroke-dasharray:1;stroke-dashoffset:0}}
 .systems-sketch figcaption{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:18px;border-top:1px solid #d8dad7;min-height:44px;color:#5c6467}
 .systems-sketch figcaption span{font-size:10px;letter-spacing:.02em}
 .systems-sketch figcaption strong{font-size:12px;font-weight:500;color:#263540}
@@ -107,6 +101,8 @@
 .system-select:hover::after,.system-select:focus-visible::after{transform:translate(2px,-2px);opacity:1}
 .system-active .system-select::after{opacity:1}
 .system-active::before{content:"";position:absolute;left:0;top:-1px;width:100%;height:1px;background:#263540}
+.aircraft-photos{grid-template-columns:1fr 1fr}
+.aircraft-photos .photo{height:clamp(300px,34vw,460px)}
 
 .news-entry{overflow-anchor:none}
 .contact-option strong{display:inline-block;position:relative;transition:transform .25s ease}
@@ -115,17 +111,17 @@
 .contact-option:hover strong::after,.contact-option:focus-visible strong::after{transform:scaleX(1)}
 
 @media(max-width:900px){
-  .flight-aircraft{width:50px}
   .flight-birds,.flight-panel-glint{display:none!important}
   .systems-layout{grid-template-columns:1fr;gap:30px}
   .systems-sketch{position:sticky;top:80px;z-index:2;width:min(100%,600px);box-sizing:border-box;margin:0 auto;padding:18px;box-shadow:0 8px 20px rgba(15,22,28,.04)}
-  .systems-sketch svg{max-height:300px}
+  .systems-render{margin:0 0 18px}
   .systems-controls .row h3{font-size:28px}
   .depth-photo img{transform:none!important}
+  .aircraft-photos{grid-template-columns:1fr}
+  .aircraft-photos .photo{height:clamp(260px,68vw,420px)}
 }
 @media(max-width:540px){
   .systems-sketch{padding:14px}
-  .systems-sketch svg{max-height:210px}
   .systems-sketch figcaption{gap:10px;padding-top:12px;min-height:28px}
   .systems-controls .row{padding:22px 0;gap:10px 12px}
   .systems-controls .row h3{font-size:25px}

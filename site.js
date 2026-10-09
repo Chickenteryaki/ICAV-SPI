@@ -204,46 +204,63 @@
   let storyTop = 0;
   let storyHeight = 0;
   let flightWidth = document.documentElement.clientWidth;
+  let flightHeight = innerHeight;
   let flightLeft = 0;
+  let flightX = 0;
+  let planeWidth = 0;
   let goalY = 0;
-  let goalRight = 0;
   let frame = 0;
+  let lastFrame = 0;
+  let pose = null;
 
   function measure() {
+    cancelAnimationFrame(frame);
+    frame = 0;
+    pose = null;
+    lastFrame = 0;
     storyTop = story.getBoundingClientRect().top + scrollY;
     storyHeight = story.offsetHeight;
     const overlayBounds = story.querySelector('.flight-overlay').getBoundingClientRect();
     flightWidth = overlayBounds.width || document.documentElement.clientWidth;
+    flightHeight = overlayBounds.height || innerHeight;
     flightLeft = overlayBounds.left;
+    const lanes = [];
     markers = chapters.map(chapter => {
       const columns = [...(chapter.querySelector('.chapter-grid')?.children || [])]
         .map(el => el.getBoundingClientRect()).sort((a, b) => a.left - b.left);
-      const gap = columns.length === 2 && innerWidth > 900 ? columns[1].left - columns[0].right : 0;
+      if (columns.length === 2) {
+        lanes.push(narrow.matches ? {
+          left: Math.max(...columns.map(column => column.right)) - flightLeft + 8,
+          right: flightWidth - 12
+        } : {
+          left: columns[0].right - flightLeft + 12,
+          right: columns[1].left - flightLeft - 12
+        });
+      }
       return {
         y: chapter.getBoundingClientRect().top + scrollY - storyTop,
-        h: Number(chapter.dataset.flightStop),
-        x: gap > 0 ? (columns[0].right + gap / 2 - flightLeft) / flightWidth * 100 : 50,
-        gap,
-        scene: chapter.id
+        h: Number(chapter.dataset.flightStop)
       };
     });
+    // One shared lane prevents sideways jumps at chapter boundaries.
+    const laneLeft = Math.max(12, ...lanes.map(lane => lane.left));
+    const laneRight = Math.min(flightWidth - 12, ...lanes.map(lane => lane.right));
+    const laneWidth = Math.max(0, laneRight - laneLeft);
+    planeWidth = Math.min(narrow.matches ? 38 : 76, laneWidth / 1.13);
+    flightX = clamp((laneLeft + laneRight) / 2, planeWidth * .6 + 12, flightWidth - planeWidth * .6 - 12);
+    story.style.setProperty('--aircraft-size', `${Math.max(1, planeWidth).toFixed(2)}px`);
     const goalCopy = story.querySelector('.goal-landing-copy');
-    const goalFacts = story.querySelector('.goal-facts');
     goalY = markers[chapters.length - 1].y + goalCopy.offsetTop;
-    goalRight = Math.max(goalCopy.getBoundingClientRect().right, goalFacts.getBoundingClientRect().right) - flightLeft;
     markers.push({
       y: Math.max(markers[markers.length - 1].y + 1, storyHeight - innerHeight),
-      h: 100,
-      x: 50,
-      gap: 0,
-      scene: 'flight-goal'
+      h: 100
     });
-    update();
+    update(performance.now());
   }
 
-  function update() {
+  function update(now) {
     frame = 0;
-    if (reduced.matches || !markers.length) return;
+    if (reduced.matches || document.hidden || !markers.length) return;
 
     const offset = scrollY - storyTop;
     if (offset < -innerHeight || offset > storyHeight) return;
@@ -276,33 +293,26 @@
     story.style.setProperty('--flight-fg', luminance > .18 ? '#111a22' : '#f6f3eb');
     story.style.setProperty('--flight-daylight', blend.toFixed(3));
     story.style.setProperty('--flight-progress', (elapsed / 100).toFixed(4));
-
     const landing = clamp((progress - .78) / .22);
-    const mobile = innerWidth <= 900;
-    const corridor = from.gap > 0 ? from : to;
-    const space = Math.max(0, (corridor.gap - Math.min(86, innerWidth * .063) * 1.15 - 20) / 2);
-    const lateral = Math.sin(progress * Math.PI * 2.05) * Math.min(12, space) / flightWidth * 100;
-    const startX = corridor.x || 50;
-    // Cross the open space above the goal, then keep clear of its centred text.
-    const approachT = clamp((innerHeight * .6 - (goalY - offset)) / (innerHeight * .15));
-    const approach = approachT * approachT * (3 - 2 * approachT);
-    const goalSpace = flightWidth - goalRight;
-    const fitsGoal = !mobile && goalSpace >= Math.min(86, innerWidth * .063) * 1.35 + 16;
-    const goalX = fitsGoal ? (goalRight + goalSpace / 2) / flightWidth * 100 : startX;
-    const x = mobile ? (flightWidth - 29) / flightWidth * 100 :
-      startX + (goalX - startX) * approach + lateral * (1 - approach);
-    const y = 27 + progress * 16 + Math.sin(progress * Math.PI * 3) * 1.3 - landing * 22;
-    const bank = 180 + Math.cos(progress * Math.PI * 2.05) * (mobile ? 3 : 4) * (1 - landing);
-    const scale = 1 + landing * (mobile ? .15 : .35);
-    const trail = .46 - landing * .31;
-
-    story.style.setProperty('--aircraft-x', `${x.toFixed(2)}%`);
-    story.style.setProperty('--aircraft-y', `${y.toFixed(2)}%`);
-    story.style.setProperty('--aircraft-bank', `${bank.toFixed(2)}deg`);
-    story.style.setProperty('--aircraft-scale', scale.toFixed(3));
-    story.style.setProperty('--aircraft-opacity', fitsGoal ? '1' : (1 - approach).toFixed(3));
-    story.style.setProperty('--trail-opacity', trail.toFixed(3));
     story.style.setProperty('--landing', landing.toFixed(3));
+    story.style.setProperty('--trail-opacity', (.46 - landing * .31).toFixed(3));
+
+    const targetY = flightHeight * (.31 + progress * .08 + Math.sin(progress * Math.PI * 2) * .01);
+    const targetBank = 180 + Math.sin(progress * Math.PI * 2) * (narrow.matches ? .8 : 1.5);
+    if (!pose) pose = { y: targetY, bank: targetBank };
+    const smoothing = 1 - Math.exp(-Math.min(64, now - (lastFrame || now - 16)) / 85);
+    pose.y += (targetY - pose.y) * smoothing;
+    pose.bank += (targetBank - pose.bank) * smoothing;
+    lastFrame = now;
+
+    // Fade before the centred goal reaches the aircraft; never move to the edge.
+    const clearance = goalY - offset - Math.max(pose.y, targetY) - planeWidth * .65;
+    const fade = clamp((clearance - 28) / 140);
+    const opacity = planeWidth >= 24 ? fade * fade * (3 - 2 * fade) : 0;
+    story.style.setProperty('--aircraft-x', `${flightX.toFixed(2)}px`);
+    story.style.setProperty('--aircraft-y', `${pose.y.toFixed(2)}px`);
+    story.style.setProperty('--aircraft-bank', `${pose.bank.toFixed(2)}deg`);
+    story.style.setProperty('--aircraft-opacity', opacity.toFixed(3));
     let visibleChapter = 0;
     const viewPosition = position + innerHeight * .45;
     while (visibleChapter < chapters.length - 1 && viewPosition >= markers[visibleChapter + 1].y) visibleChapter++;
@@ -311,6 +321,7 @@
     story.style.setProperty('--cloud-rise', `${(Math.sin(position / 510) * 7 + Math.cos(position / 980) * 3).toFixed(1)}px`);
 
     if (hourLabel) hourLabel.textContent = String(Math.floor(elapsed + .0001)).padStart(3, '0');
+    if (Math.abs(targetY - pose.y) > .05 || Math.abs(targetBank - pose.bank) > .005) requestUpdate();
   }
 
   function requestUpdate() {
@@ -329,6 +340,8 @@
   addEventListener('scroll', requestUpdate, { passive: true });
   addEventListener('resize', measure);
   addEventListener('pageshow', measure);
+  document.fonts?.ready.then(measure);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) requestUpdate(); });
   reduced.addEventListener('change', setMotion);
 
   if ('ResizeObserver' in window) new ResizeObserver(measure).observe(story);
