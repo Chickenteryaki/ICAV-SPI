@@ -589,7 +589,7 @@
   height:clamp(320px,48vh,520px)!important;
   background:url("assets/cloud-overlay.svg?v=20260922-cloudcover") center bottom/100% 100% no-repeat!important;
   opacity:1!important;
-  transform:translateZ(0)!important;
+  transform:translateZ(0);
 }
 
 /* Entire chapter sits below cloud layer so text and photos disappear behind it. */
@@ -707,7 +707,7 @@
     background-size:112% 100%!important;
     opacity:.42!important;
     filter:blur(.7px)!important;
-    transform:translate3d(calc(var(--cloud-drift,0px) * .28),calc(var(--cloud-rise,0px) * .35),0) scale(1.02)!important;
+    transform:translate3d(calc(var(--cloud-drift,0px) * .28),calc(var(--cloud-rise,0px) * .35),0) scale(1.02);
     animation:cloudBackLive 28s ease-in-out infinite alternate!important;
   }
 
@@ -720,7 +720,7 @@
     background-size:118% 100%!important;
     opacity:.77!important;
     filter:blur(.25px)!important;
-    transform:translate3d(calc(var(--cloud-drift,0px) * -.18),calc(var(--cloud-rise,0px) * -.22),0) scale(1.015)!important;
+    transform:translate3d(calc(var(--cloud-drift,0px) * -.18),calc(var(--cloud-rise,0px) * -.22),0) scale(1.015);
     animation:cloudFrontLive 18s ease-in-out infinite alternate!important;
   }
 

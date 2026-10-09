@@ -1,0 +1,141 @@
+/* Atmosphere and small interactions, shared across the existing pages. */
+.motion-enabled .reveal-ready:not(.is-revealed){opacity:0}
+.motion-enabled [data-reveal="copy"].is-revealed,
+.motion-enabled .goal-landing-copy.is-revealed{animation:copy-arrive .65s cubic-bezier(.22,.61,.36,1) both}
+.motion-enabled [data-reveal="photo"].is-revealed{animation:photo-arrive .85s cubic-bezier(.22,.61,.36,1) both}
+.motion-enabled .page-hero [data-reveal="copy"].is-revealed{animation-duration:.55s}
+
+/* The aircraft stays inside the measured space between the two columns. */
+.flight-aircraft{width:min(86px,6.3vw);height:auto;aspect-ratio:180/210}
+.flight-panel-glint{opacity:0;transition:opacity .6s ease}
+.flight-story[data-flight-scene="daylight"] .flight-panel-glint{opacity:calc(var(--flight-daylight) * .66)}
+.panel-light{animation:panel-light-pass 14s linear infinite;animation-play-state:paused}
+.flight-running .panel-light{animation-play-state:running}
+@keyframes panel-light-pass{
+  0%,64%{transform:translateX(0)}
+  82%,100%{transform:translateX(220px)}
+}
+
+.flight-birds{display:none;position:absolute;inset:0;overflow:hidden;pointer-events:none;color:#243039;opacity:calc(var(--flight-daylight) * .48)}
+.bird-flight{position:absolute;left:-6vw;top:12%;width:23px;height:15px;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;animation:bird-crossing 42s linear infinite;animation-play-state:paused;animation-delay:-27s}
+.bird-flight:nth-child(2){top:14%;width:18px;height:12px;animation-delay:-25.7s}
+.bird-flight:nth-child(3){top:10.5%;width:15px;height:10px;animation-delay:-24.2s}
+.bird-wings{transform-origin:16px 12px;animation:bird-wingbeat 4.6s ease-in-out infinite;animation-play-state:paused}
+.bird-flight:nth-child(2) .bird-wings{animation-delay:-1.1s;animation-duration:5.2s}
+.bird-flight:nth-child(3) .bird-wings{animation-delay:-2.3s;animation-duration:4.9s}
+.flight-running .bird-flight,.flight-running .bird-wings{animation-play-state:running}
+@keyframes bird-crossing{
+  0%,60%{transform:translate3d(0,0,0);opacity:0}
+  62%{opacity:.9}
+  74%{transform:translate3d(54vw,-9px,0);opacity:.9}
+  88%{opacity:.9}
+  91%,100%{transform:translate3d(113vw,5px,0);opacity:0}
+}
+@keyframes bird-wingbeat{
+  0%,9%,28%,100%{transform:scaleY(.72)}
+  14%,23%{transform:scaleY(1.12)}
+  18%{transform:scaleY(.3)}
+}
+
+@media(min-width:901px){
+  .motion-enabled .flight-birds{display:block}
+  .motion-enabled .flight-aircraft svg{animation:aircraft-idle 8s ease-in-out infinite;animation-play-state:paused}
+  .motion-enabled .flight-running .flight-aircraft svg{animation-play-state:running}
+  @keyframes aircraft-idle{
+    0%,100%{transform:translateY(0) rotate(-.7deg)}
+    50%{transform:translateY(3px) rotate(.7deg)}
+  }
+  .motion-enabled .depth-photo img{transform:translate3d(0,var(--photo-drift,0px),0) scale(1.055)}
+
+  .cloud-overlay::before{
+    height:clamp(140px,20vh,225px)!important;
+    bottom:3vh!important;
+    background-image:url("assets/cloud-back.svg?v=20261009-motion")!important;
+    opacity:.36!important;
+    animation:cloudBackBreathe 26s ease-in-out infinite alternate!important;
+    animation-play-state:paused!important;
+  }
+  .cloud-overlay::after{
+    height:clamp(165px,23vh,265px)!important;
+    background-image:url("assets/cloud-front.svg?v=20261009-motion")!important;
+    opacity:.64!important;
+    animation:cloudFrontBreathe 19s ease-in-out infinite alternate!important;
+    animation-play-state:paused!important;
+  }
+  .flight-running .cloud-overlay::before,.flight-running .cloud-overlay::after{animation-play-state:running!important}
+  @keyframes cloudBackBreathe{
+    from{transform:translate3d(calc(var(--cloud-drift,0px) * .16 - 20px),calc(var(--cloud-rise,0px) * .28),0) scale(1.025)}
+    to{transform:translate3d(calc(var(--cloud-drift,0px) * .16 + 20px),calc(var(--cloud-rise,0px) * .28 + 5px),0) scale(1.045)}
+  }
+  @keyframes cloudFrontBreathe{
+    from{transform:translate3d(calc(var(--cloud-drift,0px) * -.12 + 16px),calc(var(--cloud-rise,0px) * -.18 + 3px),0) scale(1.02)}
+    to{transform:translate3d(calc(var(--cloud-drift,0px) * -.12 - 16px),calc(var(--cloud-rise,0px) * -.18 - 2px),0) scale(1.035)}
+  }
+}
+
+/* A selectable schematic uses the same fine rules and graphite palette. */
+.systems-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(48px,7vw,110px);align-items:start}
+.systems-sketch{position:sticky;top:110px;margin:0;min-width:0;background:#f2f1ec;border:1px solid #e5e4df;padding:24px}
+.systems-sketch svg{display:block;width:100%;height:auto;color:#263540;overflow:visible}
+.diagram-guides{fill:none;stroke:currentColor;stroke-width:.55;opacity:.12;stroke-dasharray:3 8}
+.diagram-outline{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
+.diagram-layer{fill:none;stroke:currentColor;stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round;opacity:.1;transition:opacity .35s ease}
+.diagram-panel{fill:currentColor;fill-opacity:.07}
+.diagram-panel-grid{stroke:none}
+.diagram-energy{color:#936637}
+.diagram-battery{fill:#f2f1ec}
+.diagram-energy-link{stroke-dasharray:3 5}
+.diagram-controls circle{fill:#f2f1ec}
+.systems-sketch[data-active-system="aerodynamics"] [data-system-layer="aerodynamics"],
+.systems-sketch[data-active-system="structures"] [data-system-layer="structures"],
+.systems-sketch[data-active-system="energy"] [data-system-layer="energy"],
+.systems-sketch[data-active-system="controls"] [data-system-layer="controls"]{opacity:1}
+.motion-enabled .systems-sketch.is-revealed .diagram-outline path{animation:diagram-draw 1.3s cubic-bezier(.22,.61,.36,1) both}
+.motion-enabled .systems-sketch.is-revealed .diagram-layer path[pathLength="1"]{animation:diagram-draw 1.3s cubic-bezier(.22,.61,.36,1) .12s both}
+@keyframes diagram-draw{from{stroke-dasharray:1;stroke-dashoffset:1}to{stroke-dasharray:1;stroke-dashoffset:0}}
+.systems-sketch figcaption{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:18px;border-top:1px solid #d8dad7;min-height:44px;color:#5c6467}
+.systems-sketch figcaption span{font-size:10px;letter-spacing:.02em}
+.systems-sketch figcaption strong{font-size:12px;font-weight:500;color:#263540}
+.systems-controls{min-width:0}
+.systems-controls .row{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px 16px;min-height:0;padding:27px 0;position:relative;border-bottom:1px solid var(--line)}
+.systems-controls .row:first-child{border-top:1px solid var(--line)}
+.systems-controls .row .num{padding-top:9px;font-size:11px;color:#7a7a75}
+.systems-controls .row h3{margin:0;font-size:clamp(23px,2.2vw,34px);line-height:1.15}
+.systems-controls .row p{grid-column:2;font-size:16px;line-height:1.6;max-width:500px;margin:0;color:#575751}
+.system-select{display:inline-flex;align-items:center;gap:16px;text-align:left;font:inherit;font-weight:500;letter-spacing:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.system-select::after{content:"↗";font-size:18px;opacity:.4;transition:transform .25s ease,opacity .25s ease}
+.system-select:hover::after,.system-select:focus-visible::after{transform:translate(2px,-2px);opacity:1}
+.system-active .system-select::after{opacity:1}
+.system-active::before{content:"";position:absolute;left:0;top:-1px;width:100%;height:1px;background:#263540}
+
+.news-entry{overflow-anchor:none}
+.contact-option strong{display:inline-block;position:relative;transition:transform .25s ease}
+.contact-option strong::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.contact-option:hover strong,.contact-option:focus-visible strong{transform:translateX(3px)}
+.contact-option:hover strong::after,.contact-option:focus-visible strong::after{transform:scaleX(1)}
+
+@media(max-width:900px){
+  .flight-aircraft{width:50px}
+  .flight-birds,.flight-panel-glint{display:none!important}
+  .systems-layout{grid-template-columns:1fr;gap:30px}
+  .systems-sketch{position:sticky;top:80px;z-index:2;width:min(100%,600px);box-sizing:border-box;margin:0 auto;padding:18px;box-shadow:0 8px 20px rgba(15,22,28,.04)}
+  .systems-sketch svg{max-height:300px}
+  .systems-controls .row h3{font-size:28px}
+  .depth-photo img{transform:none!important}
+}
+@media(max-width:540px){
+  .systems-sketch{padding:14px}
+  .systems-sketch svg{max-height:210px}
+  .systems-sketch figcaption{gap:10px;padding-top:12px;min-height:28px}
+  .systems-controls .row{padding:22px 0;gap:10px 12px}
+  .systems-controls .row h3{font-size:25px}
+}
+
+.motion-suspended .bird-flight,.motion-suspended .bird-wings,.motion-suspended .panel-light,.motion-suspended .flight-aircraft svg{animation-play-state:paused!important}
+.motion-suspended .cloud-overlay::before,.motion-suspended .cloud-overlay::after{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){
+  .reveal-ready{opacity:1!important;clip-path:none!important}
+  .flight-birds,.flight-panel-glint,.cloud-overlay{display:none!important}
+  .depth-photo img{transform:none!important}
+  .motion-enabled .systems-sketch svg *,.flight-aircraft svg,.bird-flight,.bird-wings,.panel-light{animation:none!important}
+}

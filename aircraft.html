@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909"><link rel="icon" type="image/png" sizes="140x140" href="assets/spi-logo.png?v=20260922-spifix2"><link rel="shortcut icon" href="assets/spi-logo.png?v=20260922-spifix2"><link rel="apple-touch-icon" href="assets/spi-logo.png?v=20260922-spifix2"><meta name="description" content="Explore our solar aircraft at ICAV SPI, from our first flight tests to the systems we are developing for longer flights."><title>Aircraft | ICAV SPI</title><link rel="stylesheet" href="site.css?v=20260922-spifix2"><link rel="stylesheet" href="flight.css?v=20260922-logo"></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909"><link rel="icon" type="image/png" sizes="140x140" href="assets/spi-logo.png?v=20260922-spifix2"><link rel="shortcut icon" href="assets/spi-logo.png?v=20260922-spifix2"><link rel="apple-touch-icon" href="assets/spi-logo.png?v=20260922-spifix2"><meta name="description" content="Explore our solar aircraft at ICAV SPI, from our first flight tests to the systems we are developing for longer flights."><title>Aircraft | ICAV SPI</title><link rel="stylesheet" href="site.css?v=20260922-spifix2"><link rel="stylesheet" href="flight.css?v=20261009-motion1"><link rel="stylesheet" href="motion.css?v=20261009-motion1"></head><body>
 <header class="site-header"><a class="brand" href="index.html">ICAV <span>SPI</span></a><button class="menu" type="button" aria-expanded="false" aria-controls="site-navigation">Menu</button><nav class="nav" id="site-navigation" aria-label="Main navigation"><a href="index.html">Home</a><a href="team.html">Team</a><a class="active" href="aircraft.html">Aircraft</a><a href="updates.html">Updates</a><a href="contact.html">Contact</a></nav></header>
 <a class="skip-link" href="#main-content">Skip to content</a>
 <main id="main-content">
@@ -8,11 +8,46 @@
 
 <section class="section paper"><div class="split"><h2 class="display">The<br>demonstrator.</h2><div class="body-copy"><p>Our January 2026 demonstrator helped us refine launch procedure and flight controls for the next airframe.</p><p>Aluminium and carbon fibre spars, balsa skin and 3D printed components keep the structure light. The first flight ran on batteries, with provision for solar cells.</p></div></div></section>
 
-<section class="section white" id="systems"><div class="label">Aircraft systems</div><div class="rows">
-<div class="row"><span class="num">01</span><h3>Aerodynamics</h3><p>We study wing shape, drag and how the wing flexes in flight to reduce the power needed to stay airborne.</p></div>
-<div class="row"><span class="num">02</span><h3>Structures</h3><p>We design the airframe around stiffness, weight and assembly, from the wing spars to the joints between sections.</p></div>
-<div class="row"><span class="num">03</span><h3>Solar + Storage</h3><p>Solar collection, battery capacity and power demand have to work together to sustain flight through the night and recharge the following day.</p></div>
-<div class="row"><span class="num">04</span><h3>Flight Controls</h3><p>We develop the systems that guide the aircraft and record its behaviour in flight, helping us compare its performance with our predictions.</p></div>
+<section class="section white" id="systems"><div class="label">Aircraft systems</div>
+<div class="systems-layout">
+  <figure class="systems-sketch" id="systems-drawing" data-systems-drawing data-active-system="aerodynamics" data-reveal="diagram" aria-label="Schematic aircraft system overview">
+    <svg viewBox="0 0 600 560" aria-hidden="true">
+      <defs><pattern id="system-panel-grid" width="14" height="17" patternUnits="userSpaceOnUse"><path d="M14 0 H0 V17" fill="none" stroke="currentColor" stroke-width=".6"/></pattern></defs>
+      <g class="diagram-guides"><path d="M300 32 V527 M23 250 H577"/><circle cx="300" cy="250" r="192"/></g>
+      <g class="diagram-outline">
+        <path pathLength="1" d="M292 214 L47 239 L47 272 L289 261 M308 214 L553 239 L553 272 L311 261"/>
+        <path pathLength="1" d="M293 214 C290 185 290 135 300 107 C310 135 310 185 307 214 L306 331 L303 437 L351 453 L351 465 L302 456 L300 480 L298 456 L249 465 L249 453 L297 437 L294 331 Z"/>
+      </g>
+      <g class="diagram-layer diagram-airflow" data-system-layer="aerodynamics">
+        <path pathLength="1" d="M78 190 C185 153 234 160 275 181 M325 181 C366 160 415 153 522 190"/>
+        <path pathLength="1" d="M58 306 C151 323 221 321 275 293 M325 293 C379 321 449 323 542 306"/>
+        <path d="M267 176 L275 181 L265 184 M335 184 L325 181 L333 176 M265 292 L275 293 L271 302 M329 302 L325 293 L335 292"/>
+      </g>
+      <g class="diagram-layer diagram-structure" data-system-layer="structures">
+        <path pathLength="1" d="M61 252 H289 M311 252 H539 M299 176 V440 M301 176 V440"/>
+        <path d="M82 237 V270 M119 234 V268 M156 230 V267 M193 226 V265 M230 222 V264 M267 218 V262 M333 218 V262 M370 222 V264 M407 226 V265 M444 230 V267 M481 234 V268 M518 237 V270"/>
+      </g>
+      <g class="diagram-layer diagram-energy" data-system-layer="energy">
+        <path class="diagram-panel" d="M72 242 L268 222 L268 255 L72 265 Z M332 222 L528 242 L528 265 L332 255 Z"/>
+        <path class="diagram-panel-grid" fill="url(#system-panel-grid)" d="M72 242 L268 222 L268 255 L72 265 Z M332 222 L528 242 L528 265 L332 255 Z"/>
+        <path class="diagram-energy-link" pathLength="1" d="M171 255 V304 H285 M429 255 V304 H315"/>
+        <rect class="diagram-battery" x="285" y="289" width="30" height="54" rx="3"/><path d="M294 285 H306 M300 300 V312 M294 306 H306 M294 332 H306"/>
+      </g>
+      <g class="diagram-layer diagram-controls" data-system-layer="controls">
+        <circle cx="300" cy="363" r="11"/><path d="M300 344 V351 M300 375 V382 M281 363 H288 M312 363 H319"/>
+        <path pathLength="1" d="M294 361 L182 271 M306 361 L418 271 M300 382 V449"/>
+        <path d="M90 271 L229 263 M371 263 L510 271 M254 459 L294 451 M306 451 L346 459"/>
+        <circle cx="182" cy="271" r="4"/><circle cx="418" cy="271" r="4"/>
+      </g>
+    </svg>
+    <figcaption><span>System overview · schematic</span><strong data-system-status aria-live="polite">Aerodynamics</strong></figcaption>
+  </figure>
+  <div class="rows systems-controls">
+    <div class="row system-active"><span class="num">01</span><h3><button class="system-select" type="button" data-system-select="aerodynamics" aria-pressed="true" aria-controls="systems-drawing">Aerodynamics</button></h3><p>We study wing shape, drag and how the wing flexes in flight to reduce the power needed to stay airborne.</p></div>
+    <div class="row"><span class="num">02</span><h3><button class="system-select" type="button" data-system-select="structures" aria-pressed="false" aria-controls="systems-drawing">Structures</button></h3><p>We design the airframe around stiffness, weight and assembly, from the wing spars to the joints between sections.</p></div>
+    <div class="row"><span class="num">03</span><h3><button class="system-select" type="button" data-system-select="energy" aria-pressed="false" aria-controls="systems-drawing">Solar + Storage</button></h3><p>Solar collection, battery capacity and power demand have to work together to sustain flight through the night and recharge the following day.</p></div>
+    <div class="row"><span class="num">04</span><h3><button class="system-select" type="button" data-system-select="controls" aria-pressed="false" aria-controls="systems-drawing">Flight Controls</button></h3><p>We develop the systems that guide the aircraft and record its behaviour in flight, helping us compare its performance with our predictions.</p></div>
+  </div>
 </div></section>
 
 <section class="section black"><div class="split"><div><p class="label">2026 programme</p><h2 class="display">Our next<br>aircraft.</h2></div><div class="timeline"><div class="timeline-row"><span>Great Exhibition Road Festival</span><strong>Our new airframe on display</strong></div><div class="timeline-row"><span>Development</span><strong>System integration and ground testing</strong></div><div class="timeline-row"><span>Next milestone</span><strong>First flight preparations</strong></div></div></div></section>
@@ -23,4 +58,4 @@
   <address class="footer-location">Department of Aeronautics<br>Imperial College London<br>South Kensington, London</address>
   <div class="footer-links"><a href="contact.html">Contact us</a><a href="https://www.linkedin.com/company/icavspi-solar-plane-initiative/" target="_blank" rel="noreferrer">LinkedIn ↗</a></div>
   <p class="footer-copyright">© <span data-year></span> ICAV SPI</p>
-</footer><script src="site.js?v=20260922-logo"></script></body></html>
+</footer><script src="site.js?v=20261009-motion1"></script></body></html>

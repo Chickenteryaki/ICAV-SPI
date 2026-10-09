@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909"><link rel="icon" type="image/png" sizes="140x140" href="assets/spi-logo.png?v=20260922-spifix2"><link rel="shortcut icon" href="assets/spi-logo.png?v=20260922-spifix2"><link rel="apple-touch-icon" href="assets/spi-logo.png?v=20260922-spifix2"><meta name="description" content="We are ICAV SPI, the Solar Plane Initiative at Imperial College London. We design, build and test solar aircraft to stay airborne for days at a time."><title>ICAV SPI | Solar Plane Initiative</title><link rel="stylesheet" href="site.css?v=20260922-spifix2"><link rel="stylesheet" href="flight.css?v=20260923-mobile-cloudfix"></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909"><link rel="icon" type="image/png" sizes="140x140" href="assets/spi-logo.png?v=20260922-spifix2"><link rel="shortcut icon" href="assets/spi-logo.png?v=20260922-spifix2"><link rel="apple-touch-icon" href="assets/spi-logo.png?v=20260922-spifix2"><meta name="description" content="We are ICAV SPI, the Solar Plane Initiative at Imperial College London. We design, build and test solar aircraft to stay airborne for days at a time."><title>ICAV SPI | Solar Plane Initiative</title><link rel="stylesheet" href="site.css?v=20260922-spifix2"><link rel="stylesheet" href="flight.css?v=20261009-motion1"><link rel="stylesheet" href="motion.css?v=20261009-motion1"></head><body>
 <header class="site-header"><a class="brand" href="index.html">ICAV <span>SPI</span></a><button class="menu" type="button" aria-expanded="false" aria-controls="site-navigation">Menu</button><nav class="nav" id="site-navigation" aria-label="Main navigation"><a class="active" href="index.html">Home</a><a href="team.html">Team</a><a href="aircraft.html">Aircraft</a><a href="updates.html">Updates</a><a href="contact.html">Contact</a></nav></header>
 <a class="skip-link" href="#main-content">Skip to content</a>
 <main id="main-content">
@@ -30,15 +30,25 @@
 <div class="flight-story" id="mission" aria-label="The journey towards 100 hours">
   <div class="flight-stage" aria-hidden="true">
     <div class="flight-atmosphere"><div class="flight-horizon"></div><div class="flight-stars"></div><div class="flight-sun"></div></div>
+    <div class="flight-birds">
+      <svg class="bird-flight" viewBox="0 0 32 20"><g class="bird-wings"><path d="M2 12 Q8 6 16 12 Q24 6 30 12"/></g><path d="M16 11.5 L16 14"/></svg>
+      <svg class="bird-flight" viewBox="0 0 32 20"><g class="bird-wings"><path d="M2 12 Q8 6 16 12 Q24 6 30 12"/></g><path d="M16 11.5 L16 14"/></svg>
+      <svg class="bird-flight" viewBox="0 0 32 20"><g class="bird-wings"><path d="M2 12 Q8 6 16 12 Q24 6 30 12"/></g><path d="M16 11.5 L16 14"/></svg>
+    </div>
     <div class="flight-landing-glow"></div>
   </div>
   <div class="cloud-overlay" aria-hidden="true"></div>
   <div class="flight-overlay" aria-hidden="true">
     <div class="flight-aircraft">
-      <svg viewBox="0 0 180 210" role="presentation"><g class="aircraft-shape">
+      <svg viewBox="0 0 180 210" role="presentation">
+      <defs>
+        <clipPath id="flight-wing-clip"><path d="M85 73 L7 91 L7 104 L85 94 L95 94 L173 104 L173 91 L95 73 Z"/></clipPath>
+        <linearGradient id="flight-panel-light"><stop stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      </defs>
+      <g class="aircraft-shape">
         <path d="M86 29 Q90 12 94 29 L95 73 L173 91 L173 104 L95 94 L94 164 L118 175 L118 183 L93 177 L90 193 L87 177 L62 183 L62 175 L86 164 L85 94 L7 104 L7 91 L85 73 Z"/>
         <path class="aircraft-panels" d="M17 93 L17 102 M29 90 L29 100 M41 87 L41 98 M53 84 L53 97 M65 81 L65 95 M77 78 L77 94 M103 78 L103 94 M115 81 L115 95 M127 84 L127 97 M139 87 L139 98 M151 90 L151 100 M163 93 L163 102"/>
-      </g></svg>
+      </g><g class="flight-panel-glint" clip-path="url(#flight-wing-clip)"><rect class="panel-light" x="-28" y="66" width="27" height="44" fill="url(#flight-panel-light)"/></g></svg>
     </div>
     <div class="flight-counter"><strong><span data-flight-hours>000</span><small>h</small></strong></div>
   </div>
@@ -124,4 +134,4 @@
   <address class="footer-location">Department of Aeronautics<br>Imperial College London<br>South Kensington, London</address>
   <div class="footer-links"><a href="contact.html">Contact us</a><a href="https://www.linkedin.com/company/icavspi-solar-plane-initiative/" target="_blank" rel="noreferrer">LinkedIn ↗</a></div>
   <p class="footer-copyright">© <span data-year></span> ICAV SPI</p>
-</footer><script src="site.js?v=20260923-cloudmotion"></script></body></html>
+</footer><script src="site.js?v=20261009-motion1"></script></body></html>
