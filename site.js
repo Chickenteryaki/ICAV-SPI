@@ -203,11 +203,18 @@
   let markers = [];
   let storyTop = 0;
   let storyHeight = 0;
+  let flightWidth = document.documentElement.clientWidth;
+  let flightLeft = 0;
+  let goalY = 0;
+  let goalRight = 0;
   let frame = 0;
 
   function measure() {
     storyTop = story.getBoundingClientRect().top + scrollY;
     storyHeight = story.offsetHeight;
+    const overlayBounds = story.querySelector('.flight-overlay').getBoundingClientRect();
+    flightWidth = overlayBounds.width || document.documentElement.clientWidth;
+    flightLeft = overlayBounds.left;
     markers = chapters.map(chapter => {
       const columns = [...(chapter.querySelector('.chapter-grid')?.children || [])]
         .map(el => el.getBoundingClientRect()).sort((a, b) => a.left - b.left);
@@ -215,11 +222,15 @@
       return {
         y: chapter.getBoundingClientRect().top + scrollY - storyTop,
         h: Number(chapter.dataset.flightStop),
-        x: gap > 0 ? (columns[0].right + gap / 2) / innerWidth * 100 : 50,
+        x: gap > 0 ? (columns[0].right + gap / 2 - flightLeft) / flightWidth * 100 : 50,
         gap,
         scene: chapter.id
       };
     });
+    const goalCopy = story.querySelector('.goal-landing-copy');
+    const goalFacts = story.querySelector('.goal-facts');
+    goalY = markers[chapters.length - 1].y + goalCopy.offsetTop;
+    goalRight = Math.max(goalCopy.getBoundingClientRect().right, goalFacts.getBoundingClientRect().right) - flightLeft;
     markers.push({
       y: Math.max(markers[markers.length - 1].y + 1, storyHeight - innerHeight),
       h: 100,
@@ -270,10 +281,16 @@
     const mobile = innerWidth <= 900;
     const corridor = from.gap > 0 ? from : to;
     const space = Math.max(0, (corridor.gap - Math.min(86, innerWidth * .063) * 1.15 - 20) / 2);
-    const lateral = Math.sin(progress * Math.PI * 2.05) * Math.min(12, space) / innerWidth * 100;
+    const lateral = Math.sin(progress * Math.PI * 2.05) * Math.min(12, space) / flightWidth * 100;
     const startX = corridor.x || 50;
-    const x = mobile ? (innerWidth - 29) / innerWidth * 100 - landing * 12 :
-      startX + (50 - startX) * landing + lateral * (1 - landing);
+    // Cross the open space above the goal, then keep clear of its centred text.
+    const approachT = clamp((innerHeight * .6 - (goalY - offset)) / (innerHeight * .15));
+    const approach = approachT * approachT * (3 - 2 * approachT);
+    const goalSpace = flightWidth - goalRight;
+    const fitsGoal = !mobile && goalSpace >= Math.min(86, innerWidth * .063) * 1.35 + 16;
+    const goalX = fitsGoal ? (goalRight + goalSpace / 2) / flightWidth * 100 : startX;
+    const x = mobile ? (flightWidth - 29) / flightWidth * 100 :
+      startX + (goalX - startX) * approach + lateral * (1 - approach);
     const y = 27 + progress * 16 + Math.sin(progress * Math.PI * 3) * 1.3 - landing * 22;
     const bank = 180 + Math.cos(progress * Math.PI * 2.05) * (mobile ? 3 : 4) * (1 - landing);
     const scale = 1 + landing * (mobile ? .15 : .35);
@@ -283,6 +300,7 @@
     story.style.setProperty('--aircraft-y', `${y.toFixed(2)}%`);
     story.style.setProperty('--aircraft-bank', `${bank.toFixed(2)}deg`);
     story.style.setProperty('--aircraft-scale', scale.toFixed(3));
+    story.style.setProperty('--aircraft-opacity', fitsGoal ? '1' : (1 - approach).toFixed(3));
     story.style.setProperty('--trail-opacity', trail.toFixed(3));
     story.style.setProperty('--landing', landing.toFixed(3));
     let visibleChapter = 0;

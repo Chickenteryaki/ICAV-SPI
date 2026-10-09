@@ -6,7 +6,7 @@
 .motion-enabled .page-hero [data-reveal="copy"].is-revealed{animation-duration:.55s}
 
 /* The aircraft stays inside the measured space between the two columns. */
-.flight-aircraft{width:min(86px,6.3vw);height:auto;aspect-ratio:180/210}
+.flight-aircraft{width:min(86px,6.3vw);height:auto;aspect-ratio:180/210;opacity:var(--aircraft-opacity,1)}
 .flight-panel-glint{opacity:0;transition:opacity .6s ease}
 .flight-story[data-flight-scene="daylight"] .flight-panel-glint{opacity:calc(var(--flight-daylight) * .66)}
 .panel-light{animation:panel-light-pass 14s linear infinite;animation-play-state:paused}
