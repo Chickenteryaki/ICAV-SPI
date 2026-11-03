@@ -1,0 +1,108 @@
+/* ==========================================================================
+   Design A — "Mission Control"
+   Technical, aerospace-instrument look: blueprint grid, monospace telemetry,
+   decoding headlines, a framed hero with live readouts, cursor reticle.
+   ========================================================================== */
+:root{
+  --ink:#060a12;
+  --cyan:#7fd6ff;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono","Cascadia Mono",Menlo,Consolas,monospace;
+  --grid:rgba(127,214,255,.055);
+}
+body{background:var(--ink)}
+.black,.stats,.footer,.marquee,.team-cta{background-color:var(--ink)}
+.black,.stats,.footer,.team-cta,.blueprint{
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:56px 56px;background-position:-1px -1px}
+.marquee::before{background:linear-gradient(90deg,var(--ink),transparent)}
+.marquee::after{background:linear-gradient(270deg,var(--ink),transparent)}
+.polish .site-header::after{background:rgba(6,10,18,.78)}
+
+/* Telemetry type */
+.eyebrow,.label,.nav a,.menu,.hero-meta,.caption,.stat span,.timeline-row span,.hud-top,.hud-meter,
+.footer-copyright,.news-link span,.news-entry summary>span,.team-bands span,.row .num,.scroll-cue,
+.contact-option span,.goal-facts span,.home-next .timeline-row span,.chapter-link,.text-link,.button,.crew-list span{
+  font-family:var(--mono)!important;font-feature-settings:normal}
+.nav a,.menu{font-size:11px!important;letter-spacing:.1em}
+.home-next .timeline-row span,.goal-facts span{font-size:12px!important;letter-spacing:.06em;text-transform:uppercase}
+.chapter-link,.text-link,.button{font-size:12px!important;letter-spacing:.06em!important;text-transform:uppercase}
+.label::before,.eyebrow::before{content:"// ";color:var(--cyan);opacity:.8}
+::selection{background:var(--cyan);color:var(--ink)}
+.scroll-progress{background:linear-gradient(90deg,var(--cyan),#d6f3ff);box-shadow:0 0 14px rgba(127,214,255,.6)}
+
+/* Headlines decode instead of sliding (see design.js) */
+.polish-motion .wsplit .wi{transform:none!important;transition:none!important}
+.mc-decoding{color:var(--cyan)}
+
+/* ---------- Hero instrument frame ---------- */
+.mc-frame{position:absolute;z-index:3;inset:clamp(84px,11vh,110px) var(--pad) clamp(16px,2.6vh,26px);pointer-events:none;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.mc-corner{position:absolute;width:22px;height:22px;border:1.5px solid rgba(255,255,255,.75)}
+.mc-corner:nth-child(1){left:0;top:0;border-right:0;border-bottom:0}
+.mc-corner:nth-child(2){right:0;top:0;border-left:0;border-bottom:0}
+.mc-corner:nth-child(3){left:0;bottom:0;border-right:0;border-top:0}
+.mc-corner:nth-child(4){right:0;bottom:0;border-left:0;border-top:0}
+.mc-read{position:absolute;top:2px;display:flex;gap:18px;align-items:center}
+.mc-read.l{left:34px}.mc-read.r{right:34px}
+.mc-read b{font-weight:500;color:#fff}
+.mc-live::before{content:"";display:inline-block;width:6px;height:6px;margin-right:8px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 8px #ff4d4d;vertical-align:1px}
+.polish-motion .mc-live::before{animation:mc-blink 1.4s steps(2,jump-none) infinite}
+@keyframes mc-blink{50%{opacity:.2}}
+.mc-scan{position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(127,214,255,.55),transparent);box-shadow:0 0 18px rgba(127,214,255,.45);opacity:0}
+.polish-motion .mc-scan{animation:mc-scan 7s cubic-bezier(.45,0,.55,1) 1.2s infinite}
+@keyframes mc-scan{0%{top:0;opacity:0}8%{opacity:1}92%{opacity:1}100%{top:100%;opacity:0}}
+.mc-path{position:absolute;inset:0;z-index:2;pointer-events:none;width:100%;height:100%;overflow:visible}
+.mc-path path{fill:none;stroke:rgba(255,255,255,.7);stroke-width:1.5;stroke-dasharray:2 7;vector-effect:non-scaling-stroke}
+.mc-path .mc-trail{stroke:var(--cyan);stroke-dasharray:none;stroke-width:1.5;filter:drop-shadow(0 0 4px rgba(127,214,255,.8))}
+.mc-plane{position:absolute;z-index:3;left:0;top:0;width:46px;pointer-events:none;opacity:0;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 190'%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M120 69.5L16 71Q5 71.6 4.6 77.2Q5 83 15.5 84.2L120 88.6L224.5 84.2Q235 83 235.4 77.2Q235 71.6 224 71Z'/%3E%3Cpath d='M76 46h12v58H76zM152 46h12v58h-12zM80 100h4v72h-4zM156 100h4v72h-4zM66 162h32v9H66zM142 162h32v9h-32z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+  aspect-ratio:240/190;filter:drop-shadow(0 0 6px rgba(127,214,255,.9))}
+.mc-plane-tag{position:absolute;left:30px;top:-18px;white-space:nowrap;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--cyan)}
+@media(max-width:900px){.mc-read.r,.mc-path,.mc-plane{display:none}.mc-frame{inset:76px 14px 14px}}
+
+/* ---------- Cursor reticle ---------- */
+.mc-cursor{position:fixed;z-index:120;left:0;top:0;width:34px;height:34px;margin:-17px 0 0 -17px;pointer-events:none;border-radius:50%;
+  border:1px solid rgba(127,214,255,.85);mix-blend-mode:difference;transition:width .35s var(--ease-out),height .35s var(--ease-out),margin .35s var(--ease-out),opacity .3s;opacity:0}
+.mc-cursor::before,.mc-cursor::after{content:"";position:absolute;left:50%;top:50%;background:rgba(127,214,255,.9)}
+.mc-cursor::before{width:9px;height:1px;margin:0 0 0 -4.5px;box-shadow:-20px 0 0 rgba(127,214,255,.9),20px 0 0 rgba(127,214,255,.9)}
+.mc-cursor::after{width:1px;height:9px;margin:-4.5px 0 0;box-shadow:0 -20px 0 rgba(127,214,255,.9),0 20px 0 rgba(127,214,255,.9)}
+.mc-cursor.on{opacity:1}
+.mc-cursor.hot{width:58px;height:58px;margin:-29px 0 0 -29px;border-color:#fff}
+.mc-cursor span{position:absolute;left:calc(100% + 10px);top:50%;translate:0 -50%;white-space:nowrap;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--cyan)}
+
+/* ---------- Chapter rail (home flight story) ---------- */
+.mc-rail{position:fixed;z-index:60;left:clamp(10px,1.4vw,22px);top:50%;translate:0 -50%;display:grid;gap:12px;pointer-events:none;opacity:0;transition:opacity .4s}
+.mc-rail.on{opacity:1}
+.mc-rail i{display:block;width:12px;height:1.5px;background:currentColor;opacity:.35;transition:width .45s var(--ease-out),opacity .3s,background-color .3s}
+.mc-rail i.on{width:26px;opacity:1;background:var(--sun)}
+.mc-rail{color:var(--flight-fg,#fff)}
+@media(max-width:900px){.mc-rail{display:none}}
+
+/* Section index numbers on display headings */
+.section .display{position:relative}
+
+/* ---------- Blueprint (Aircraft page) ---------- */
+.blueprint{background-color:#071224;color:#e9f4ff;padding-bottom:clamp(70px,8vw,120px)}
+.bp-head{display:grid;grid-template-columns:1fr minmax(260px,420px);gap:40px;align-items:end}
+.bp-head .label{grid-column:1/-1;color:var(--cyan)}
+.bp-head .lead{color:#a9c4de;font-size:clamp(17px,1.4vw,22px)}
+.bp-figure{margin:50px auto 0;position:relative;max-width:min(1100px,100%)}
+.bp-figure svg{max-height:82vh}
+.bp-figure svg{width:100%;height:auto;overflow:visible}
+.bp-figure figcaption{margin-top:14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6f8fb0}
+.bp-line{fill:none;stroke:#bfe6ff;stroke-width:.4;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0}
+.bp-cells{fill:none;stroke:rgba(127,214,255,.38);stroke-width:.22;opacity:1;transition:opacity 1s ease 1.6s}
+.bp-callout circle{fill:#071224;stroke:var(--sun);stroke-width:1.5}
+.bp-callout path{fill:none;stroke:rgba(242,181,68,.7);stroke-width:1;stroke-dasharray:1;stroke-dashoffset:0}
+.bp-t{fill:#fff;font-family:var(--font-display);font-size:22px;font-weight:600;letter-spacing:-.01em}
+.bp-s{fill:#8fb0cf;font-family:var(--mono);font-size:13px;letter-spacing:.04em}
+.polish-motion .bp-figure:not(.drawn) .bp-line{stroke-dashoffset:1}
+.polish-motion .bp-figure:not(.drawn) .bp-cells{opacity:0}
+.polish-motion .bp-figure:not(.drawn) .bp-callout{opacity:0}
+.polish-motion .bp-figure:not(.drawn) .bp-callout path{stroke-dashoffset:1}
+.polish-motion .bp-line{transition:stroke-dashoffset 1.8s cubic-bezier(.65,0,.35,1);transition-delay:calc(var(--n) * 90ms)}
+.polish-motion .bp-callout{transition:opacity .6s ease;transition-delay:calc(1.6s + var(--n) * 160ms)}
+.polish-motion .bp-callout path{transition:stroke-dashoffset .8s ease;transition-delay:calc(1.6s + var(--n) * 160ms)}
+@media(max-width:900px){.bp-head{grid-template-columns:1fr}.bp-t{font-size:30px}.bp-s{display:none}}
+
+@media(prefers-reduced-motion:reduce){.mc-cursor,.mc-scan,.mc-plane,.mc-path{display:none!important}}
