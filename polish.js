@@ -303,6 +303,121 @@
     restartDots(true);
   }
 
+  /* ---------- Tiny aircraft on the scroll-progress bar ---------- */
+  const scrollPlane = document.createElement('div');
+  scrollPlane.className = 'scroll-plane';
+  scrollPlane.setAttribute('aria-hidden', 'true');
+  document.body.append(scrollPlane);
+
+  /* ---------- Flight story v2: living sky, sun-cast shadow, mission HUD ----------
+     site.js drives the flight itself (--flight-progress, --flight-daylight,
+     aircraft position). This reads those values and adds the sky and HUD.
+     The energy figures are an illustrative simulation, labelled as such. */
+  const story = document.querySelector('.flight-story');
+  const hud = story?.querySelector('.flight-hud');
+  if (story && hud) {
+    const $ = sel => hud.querySelector(sel);
+    const dayEl = $('[data-hud-day]'), timeEl = $('[data-hud-time]'), statusEl = $('[data-hud-status]');
+    const solarEl = $('[data-hud-solar]'), batteryEl = $('[data-hud-battery]');
+
+    // Sun height over a day starting at 06:00 (sunrise) — same clock as site.js.
+    const clockAt = h => (6 + h) % 24;
+    const sunHeight = clock => Math.sin(((clock - 6) / 12) * Math.PI);
+    // Battery: charge in daylight, drain on the night-time cruise load.
+    const STEP = .05, LOAD = .3, RATE = .2;
+    const battery = [];
+    for (let h = 0, b = .42; h <= 100.0001; h += STEP) {
+      battery.push(b);
+      const solar = Math.max(0, sunHeight(clockAt(h))) ** 1.15;
+      b = clamp(b + (solar - LOAD) * RATE * STEP, .12, 1);
+    }
+    const batteryAt = h => battery[clamp(Math.round(h / STEP), 0, battery.length - 1)];
+
+    // Seeded starfield so it looks the same on every visit.
+    let seed = 7;
+    const rand = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    story.querySelectorAll('.sky-stars i').forEach(layer => {
+      const stars = [];
+      for (let i = 0; i < 46; i++) {
+        const a = (.35 + rand() * .65).toFixed(2);
+        stars.push(`${(rand() * 100).toFixed(2)}vw ${(rand() * 72).toFixed(2)}vh 0 ${rand() < .15 ? .6 : 0}px rgba(236,242,255,${a})`);
+      }
+      layer.style.boxShadow = stars.join(',');
+    });
+
+    const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
+    let lastText = '';
+    const updateFlight = () => {
+      const progress = parseFloat(story.style.getPropertyValue('--flight-progress'));
+      if (Number.isNaN(progress)) return;
+      const hours = progress * 100;
+      const clock = clockAt(hours);
+      const height = sunHeight(clock);
+
+      // Sun and moon travel an arc from left horizon, over the top, to the right.
+      const theta = ((clock - 6) / 12) * Math.PI;
+      const arc = angle => [50 - 40 * Math.cos(angle), 84 - 66 * Math.sin(angle)];
+      const [sx, sy] = arc(theta);
+      const [mx, my] = arc(theta - Math.PI);
+      const sunVis = clamp((height + .12) / .3, 0, 1);
+      const moonVis = clamp((-height + .05) / .3, 0, 1);
+      const warm = clamp(1 - height / .55, 0, 1);
+      const set = (k, v) => story.style.setProperty(k, v);
+      set('--sun-x', `${sx.toFixed(2)}%`); set('--sun-y', `${sy.toFixed(2)}%`);
+      set('--moon-x', `${mx.toFixed(2)}%`); set('--moon-y', `${my.toFixed(2)}%`);
+      set('--sun-vis', sunVis.toFixed(3)); set('--moon-vis', (moonVis * .95).toFixed(3));
+      set('--sun-color', `rgb(${mix([255, 236, 186], [255, 160, 92], warm).join(',')})`);
+      set('--dusk', (clamp(1 - Math.abs(height) / .38, 0, 1) * .85).toFixed(3));
+
+      // Shadow falls away from the sun.
+      const ax = parseFloat(story.style.getPropertyValue('--aircraft-x')) || innerWidth / 2;
+      const ay = parseFloat(story.style.getPropertyValue('--aircraft-y')) || innerHeight / 2;
+      let dx = ax - (sx / 100) * innerWidth, dy = ay - (sy / 100) * innerHeight;
+      const len = Math.hypot(dx, dy) || 1;
+      const reach = 4 + 8 * sunVis;
+      dx = (dx / len) * reach; dy = (dy / len) * reach;
+      // drop-shadow is applied inside the rotated aircraft, so undo the rotation.
+      const bank = (parseFloat(story.style.getPropertyValue('--aircraft-bank')) || 180) * Math.PI / 180;
+      const lx = dx * Math.cos(-bank) - dy * Math.sin(-bank);
+      const ly = dx * Math.sin(-bank) + dy * Math.cos(-bank);
+      set('--shadow-x', `${lx.toFixed(1)}px`); set('--shadow-y', `${ly.toFixed(1)}px`);
+
+      // HUD readout
+      const solar = Math.max(0, height) ** 1.15;
+      const charge = batteryAt(hours);
+      set('--hud-solar', solar.toFixed(3)); set('--hud-battery', charge.toFixed(3));
+      const passed = hours >= 81.5;
+      story.classList.toggle('record-passed', passed);
+      const status = passed ? 'Record passed' : solar > LOAD ? 'Charging' : solar > .02 ? 'Solar + battery' : 'On battery';
+      set('--hud-dot', passed ? '#f2b544' : solar > LOAD ? '#4fcf92' : solar > .02 ? '#f2b544' : '#8fb3e3');
+      const totalMinutes = Math.floor((6 + hours) * 60);
+      const day = Math.floor(totalMinutes / 1440) + 1;
+      const time = `${String(Math.floor((totalMinutes % 1440) / 60)).padStart(2, '0')}:${String(totalMinutes % 60 - (totalMinutes % 10)).padStart(2, '0')}`;
+      const text = `${day}|${time}|${status}|${Math.round(solar * 100)}|${Math.round(charge * 100)}`;
+      if (text !== lastText) {
+        lastText = text;
+        dayEl.textContent = day; timeEl.textContent = time; statusEl.textContent = status;
+        solarEl.textContent = `${Math.round(solar * 100)}%`; batteryEl.textContent = `${Math.round(charge * 100)}%`;
+      }
+    };
+    // site.js eases the aircraft for a moment after scrolling stops, so keep
+    // following it briefly rather than updating only on scroll events.
+    let flightFrame = 0, followUntil = 0;
+    const tick = now => {
+      flightFrame = 0;
+      updateFlight();
+      if (now < followUntil) flightFrame = requestAnimationFrame(tick);
+    };
+    const requestFlight = () => {
+      followUntil = performance.now() + 700;
+      if (!flightFrame) flightFrame = requestAnimationFrame(tick);
+    };
+    addEventListener('scroll', requestFlight, { passive: true });
+    addEventListener('resize', requestFlight);
+    addEventListener('load', requestFlight);
+    requestFlight();
+  }
+
   /* ---------- If the visitor switches on "reduce motion", settle everything ---------- */
   reduced.addEventListener('change', () => {
     syncMotion();

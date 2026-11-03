@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909"><link rel="icon" type="image/png" sizes="140x140" href="assets/spi-logo.png?v=20260922-spifix2"><link rel="shortcut icon" href="assets/spi-logo.png?v=20260922-spifix2"><link rel="apple-touch-icon" href="assets/spi-logo.png?v=20260922-spifix2"><meta name="description" content="We are ICAV SPI, the Solar Plane Initiative at Imperial College London. We design, build and test solar aircraft to stay airborne for days at a time."><title>ICAV SPI | Solar Plane Initiative</title><link rel="stylesheet" href="site.css?v=20260922-spifix2"><link rel="stylesheet" href="flight.css?v=20261009-motion1"><link rel="stylesheet" href="motion.css?v=20261009-fixes1"><link rel="preload" href="assets/fonts/inter-display-600.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="assets/fonts/inter-400.woff" as="font" type="font/woff" crossorigin><link rel="stylesheet" href="polish.css?v=20261103-polish1"></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909"><link rel="icon" type="image/png" sizes="140x140" href="assets/spi-logo.png?v=20260922-spifix2"><link rel="shortcut icon" href="assets/spi-logo.png?v=20260922-spifix2"><link rel="apple-touch-icon" href="assets/spi-logo.png?v=20260922-spifix2"><meta name="description" content="We are ICAV SPI, the Solar Plane Initiative at Imperial College London. We design, build and test solar aircraft to stay airborne for days at a time."><title>ICAV SPI | Solar Plane Initiative</title><link rel="stylesheet" href="site.css?v=20260922-spifix2"><link rel="stylesheet" href="flight.css?v=20261009-motion1"><link rel="stylesheet" href="motion.css?v=20261009-fixes1"><link rel="preload" href="assets/fonts/inter-display-600.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="assets/fonts/inter-400.woff" as="font" type="font/woff" crossorigin><link rel="stylesheet" href="polish.css?v=20261103-flight2"></head><body>
 <header class="site-header"><a class="brand" href="index.html">ICAV <span>SPI</span></a><button class="menu" type="button" aria-expanded="false" aria-controls="site-navigation">Menu</button><nav class="nav" id="site-navigation" aria-label="Main navigation"><a class="active" href="index.html">Home</a><a href="team.html">Team</a><a href="aircraft.html">Aircraft</a><a href="updates.html">Updates</a><a href="contact.html">Contact</a></nav></header>
 <a class="skip-link" href="#main-content">Skip to content</a>
 <main id="main-content">
@@ -29,7 +29,7 @@
 
 <div class="flight-story" id="mission" aria-label="The journey towards 100 hours">
   <div class="flight-stage" aria-hidden="true">
-    <div class="flight-atmosphere"><div class="flight-horizon"></div><div class="flight-stars"></div><div class="flight-sun"></div></div>
+    <div class="flight-atmosphere"><div class="flight-horizon"></div><div class="flight-stars"></div><div class="flight-sun"></div><div class="sky-dusk"></div><div class="sky-stars"><i></i><i></i></div><div class="sky-moon"></div><div class="sky-sun"></div></div>
     <div class="flight-birds">
       <svg class="bird-flight" viewBox="0 0 32 20"><g class="bird-wings"><path d="M2 12 Q8 6 16 12 Q24 6 30 12"/></g><path d="M16 11.5 L16 14"/></svg>
       <svg class="bird-flight" viewBox="0 0 32 20"><g class="bird-wings"><path d="M2 12 Q8 6 16 12 Q24 6 30 12"/></g><path d="M16 11.5 L16 14"/></svg>
@@ -40,17 +40,33 @@
   <div class="cloud-overlay" aria-hidden="true"></div>
   <div class="flight-overlay" aria-hidden="true">
     <div class="flight-aircraft">
-      <svg viewBox="0 0 180 210" role="presentation">
+      <svg class="plane-v2" viewBox="0 0 240 190" role="presentation">
       <defs>
-        <clipPath id="flight-wing-clip"><path d="M85 73 L7 91 L7 104 L85 94 L95 94 L173 104 L173 91 L95 73 Z"/></clipPath>
-        <linearGradient id="flight-panel-light"><stop stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+        <clipPath id="plane-wing-clip"><path d="M120 69.5 L16 71 Q5 71.6 4.6 77.2 Q5 83 15.5 84.2 L120 88.6 L224.5 84.2 Q235 83 235.4 77.2 Q235 71.6 224 71 Z"/></clipPath>
+        <linearGradient id="plane-wing-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a4c80"/><stop offset=".55" stop-color="#1d3866"/><stop offset="1" stop-color="#152a4f"/></linearGradient>
+        <linearGradient id="plane-glint" x1="0" x2="1"><stop stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+        <radialGradient id="plane-light-red"><stop stop-color="#fff"/><stop offset=".22" stop-color="#ff3b3b"/><stop offset="1" stop-color="#ff3b3b" stop-opacity="0"/></radialGradient><radialGradient id="plane-light-green"><stop stop-color="#fff"/><stop offset=".22" stop-color="#2bff88"/><stop offset="1" stop-color="#2bff88" stop-opacity="0"/></radialGradient><radialGradient id="plane-light-white"><stop stop-color="#fff"/><stop offset=".22" stop-color="#eaf4ff"/><stop offset="1" stop-color="#eaf4ff" stop-opacity="0"/></radialGradient>
       </defs>
-      <g class="aircraft-shape">
-        <path d="M86 29 Q90 12 94 29 L95 73 L173 91 L173 104 L95 94 L94 164 L118 175 L118 183 L93 177 L90 193 L87 177 L62 183 L62 175 L86 164 L85 94 L7 104 L7 91 L85 73 Z"/>
-        <path class="aircraft-panels" d="M17 93 L17 102 M29 90 L29 100 M41 87 L41 98 M53 84 L53 97 M65 81 L65 95 M77 78 L77 94 M103 78 L103 94 M115 81 L115 95 M127 84 L127 97 M139 87 L139 98 M151 90 L151 100 M163 93 L163 102"/>
-      </g><g class="flight-panel-glint" clip-path="url(#flight-wing-clip)"><rect class="panel-light" x="-28" y="66" width="27" height="44" fill="url(#flight-panel-light)"/></g></svg>
+      <g class="plane-body">
+        <path class="plane-boom" d="M80.7 98 H83.3 V170 H80.7 Z"/><path class="plane-tail" d="M67 165.5 Q66 162 69.5 162 H94.5 Q98 162 97 165.5 L95.5 171 H68.5 Z"/><path class="plane-fin" d="M81 154 H83 V176 H81 Z"/><path class="plane-boom" d="M156.7 98 H159.3 V170 H156.7 Z"/><path class="plane-tail" d="M143 165.5 Q142 162 145.5 162 H170.5 Q174 162 173 165.5 L171.5 171 H144.5 Z"/><path class="plane-fin" d="M157 154 H159 V176 H157 Z"/>
+        <path class="plane-wing" d="M120 69.5 L16 71 Q5 71.6 4.6 77.2 Q5 83 15.5 84.2 L120 88.6 L224.5 84.2 Q235 83 235.4 77.2 Q235 71.6 224 71 Z"/>
+        <g clip-path="url(#plane-wing-clip)"><path class="plane-cells" d="M16 70 V89 M24 70 V89 M32 70 V89 M40 70 V89 M48 70 V89 M56 70 V89 M64 70 V89 M72 70 V89 M80 70 V89 M88 70 V89 M96 70 V89 M104 70 V89 M128 70 V89 M136 70 V89 M144 70 V89 M152 70 V89 M160 70 V89 M168 70 V89 M176 70 V89 M184 70 V89 M192 70 V89 M200 70 V89 M208 70 V89 M216 70 V89 M224 70 V89 M6 79.2 H234"/><rect class="plane-glint" x="-40" y="64" width="34" height="30" fill="url(#plane-glint)"/></g>
+        <path class="plane-pod" d="M78.4 45 Q75.4 49 75.4 57 L75.9 84 Q77 95 80.3 103 H83.7 Q87 95 88.1 84 L88.6 57 Q88.6 49 85.6 45 Z"/><ellipse class="plane-spinner" cx="82" cy="43.2" rx="3.3" ry="3"/><rect class="plane-prop" x="70" y="38.6" width="24" height="1.6" rx=".8"/><path class="plane-pod" d="M154.4 45 Q151.4 49 151.4 57 L151.9 84 Q153 95 156.3 103 H159.7 Q163 95 164.1 84 L164.6 57 Q164.6 49 161.6 45 Z"/><ellipse class="plane-spinner" cx="158" cy="43.2" rx="3.3" ry="3"/><rect class="plane-prop" x="146" y="38.6" width="24" height="1.6" rx=".8"/>
+        <path class="plane-canopy" d="M120 56 Q125.4 59.5 125.2 70 Q124.6 82 120 88.5 Q115.4 82 114.8 70 Q114.6 59.5 120 56 Z"/>
+        <path class="plane-canopy-shine" d="M118.2 61 Q117 66 117.3 72"/>
+      </g>
+      <g class="plane-lights">
+        <circle class="nav-port" cx="5.4" cy="77.2" r="7" fill="url(#plane-light-red)"/><circle class="nav-stbd" cx="234.6" cy="77.2" r="7" fill="url(#plane-light-green)"/>
+        <circle class="nav-strobe" cx="82" cy="174" r="8" fill="url(#plane-light-white)"/><circle class="nav-strobe" cx="158" cy="174" r="8" fill="url(#plane-light-white)"/>
+      </g>
+      </svg>
     </div>
-    <div class="flight-counter"><strong><span data-flight-hours>000</span><small>h</small></strong></div>
+    <div class="flight-hud">
+      <div class="hud-top"><span>Simulated flight</span><span>Day <b data-hud-day>1</b> · <b data-hud-time>06:00</b></span></div>
+      <div class="hud-main"><strong><span data-flight-hours>000</span><small>h</small></strong><em data-hud-status>Charging</em></div>
+      <div class="hud-track"><i></i><span class="hud-record"><b>Record 81.5 h</b></span></div>
+      <div class="hud-meters"><div class="hud-meter hud-solar"><span>Solar</span><i></i><b data-hud-solar>0%</b></div><div class="hud-meter hud-battery"><span>Battery</span><i></i><b data-hud-battery>40%</b></div></div>
+    </div>
   </div>
 
   <section class="flight-chapter programme-chapter" id="programme" data-flight-stop="0">
@@ -136,4 +152,4 @@
   <address class="footer-location">Department of Aeronautics<br>Imperial College London<br>South Kensington, London</address>
   <div class="footer-links"><a href="contact.html">Contact us</a><a href="https://www.linkedin.com/company/icavspi-solar-plane-initiative/" target="_blank" rel="noreferrer">LinkedIn ↗</a></div>
   <p class="footer-copyright">© <span data-year></span> ICAV SPI</p>
-</footer><script src="site.js?v=20261009-fixes1"></script><script src="polish.js?v=20261103-polish1"></script></body></html>
+</footer><script src="site.js?v=20261103-flight2"></script><script src="polish.js?v=20261103-flight2"></script></body></html>

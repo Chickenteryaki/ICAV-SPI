@@ -246,7 +246,7 @@
     const laneLeft = Math.max(12, ...lanes.map(lane => lane.left));
     const laneRight = Math.min(flightWidth - 12, ...lanes.map(lane => lane.right));
     const laneWidth = Math.max(0, laneRight - laneLeft);
-    planeWidth = Math.min(narrow.matches ? 38 : 76, laneWidth / 1.13);
+    planeWidth = Math.min(narrow.matches ? 46 : 120, laneWidth / 1.06);
     flightX = clamp((laneLeft + laneRight) / 2, planeWidth * .6 + 12, flightWidth - planeWidth * .6 - 12);
     story.style.setProperty('--aircraft-size', `${Math.max(1, planeWidth).toFixed(2)}px`);
     const goalCopy = story.querySelector('.goal-landing-copy');
@@ -307,11 +307,16 @@
 
     // Fade before the centred goal reaches the aircraft; never move to the edge.
     const clearance = goalY - offset - Math.max(pose.y, targetY) - planeWidth * .65;
-    const fade = clamp((clearance - 28) / 140);
-    const opacity = planeWidth >= 24 ? fade * fade * (3 - 2 * fade) : 0;
-    story.style.setProperty('--aircraft-x', `${flightX.toFixed(2)}px`);
-    story.style.setProperty('--aircraft-y', `${pose.y.toFixed(2)}px`);
-    story.style.setProperty('--aircraft-bank', `${pose.bank.toFixed(2)}deg`);
+    const fade = clamp((clearance - 28) / 300);
+    const visible = clamp(fade * 1.6);
+    const opacity = planeWidth >= 24 ? visible * visible * (3 - 2 * visible) : 0;
+    // Instead of simply fading near the goal, the aircraft banks away and climbs out.
+    const exit = 1 - fade;
+    const peel = exit * exit * (3 - 2 * exit);
+    story.style.setProperty('--aircraft-x', `${(flightX - peel * planeWidth * 1.9).toFixed(2)}px`);
+    story.style.setProperty('--aircraft-y', `${(pose.y + peel * flightHeight * .04).toFixed(2)}px`);
+    story.style.setProperty('--aircraft-bank', `${(pose.bank + peel * 42).toFixed(2)}deg`);
+    story.style.setProperty('--aircraft-scale', (1 + peel * .35).toFixed(3));
     story.style.setProperty('--aircraft-opacity', opacity.toFixed(3));
     let visibleChapter = 0;
     const viewPosition = position + innerHeight * .45;
