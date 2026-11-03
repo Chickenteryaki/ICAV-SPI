@@ -237,6 +237,103 @@ body{font-family:var(--font-text);font-feature-settings:"cv11","ss01";text-rende
 /* Footer: keep the tagline under the logo (an older p:last-child rule pushed it right) */
 .footer-compact .footer-identity p{text-align:left}
 
+/* ==========================================================================
+   Flight story v2 — the real twin-boom aircraft, a living sky and a mission HUD
+   ========================================================================== */
+@media(min-width:901px){.polish .flight-chapter .chapter-grid{gap:clamp(70px,10vw,190px)}}
+
+/* Aircraft */
+.polish .flight-aircraft{height:auto;aspect-ratio:240/190;filter:none;
+  transform:translate3d(var(--aircraft-x,0px),var(--aircraft-y,0px),0) translate(-50%,-50%) rotate(var(--aircraft-bank,180deg)) scale(var(--aircraft-scale,1))}
+.polish .flight-aircraft:before{left:0;right:0;width:auto;top:91%;height:clamp(110px,18vh,210px);transform:none;filter:none;
+  background:linear-gradient(currentColor,transparent) 34.2% 0/1.2px 100% no-repeat,linear-gradient(currentColor,transparent) 65.8% 0/1.2px 100% no-repeat;
+  opacity:calc(var(--trail-opacity,.4) * .75)}
+.polish .flight-aircraft:after{left:0;right:0;width:auto;top:41%;height:clamp(130px,22vh,260px);transform:none;filter:blur(.3px);
+  background:linear-gradient(currentColor,transparent) 1.6% 0/1px 100% no-repeat,linear-gradient(currentColor,transparent) 98.4% 0/1px 100% no-repeat;
+  opacity:calc(var(--trail-opacity,.4) * .4)}
+.plane-v2{overflow:visible;filter:drop-shadow(var(--shadow-x,3px) var(--shadow-y,7px) 4px rgba(10,20,36,calc(.06 + .2 * var(--flight-daylight,1))))}
+.plane-wing{fill:url(#plane-wing-fill);stroke:color-mix(in srgb,#0f2140 calc(var(--flight-daylight,1) * 100%),#8fb3e3);stroke-width:.8}
+.plane-cells{fill:none;stroke:rgba(150,192,242,.34);stroke-width:.55}
+.plane-glint{opacity:calc(var(--flight-daylight,1) * var(--sun-vis,1) * .8);animation:plane-glint 9s linear infinite;animation-play-state:paused}
+@keyframes plane-glint{0%,52%{transform:translateX(0)}84%,100%{transform:translateX(300px)}}
+.plane-pod{fill:#f5f6f3;stroke:#b4bcc5;stroke-width:.7}
+.plane-spinner{fill:#8b939c;stroke:#6c747d;stroke-width:.4}
+.plane-prop{fill:rgba(36,44,54,.5);transform-box:fill-box;transform-origin:50% 50%;animation:plane-prop .1s steps(2,jump-none) infinite;animation-play-state:paused}
+@keyframes plane-prop{from{transform:scaleX(1);opacity:.6}to{transform:scaleX(.3);opacity:.25}}
+.plane-boom{fill:#dde2e8;stroke:#a7b0ba;stroke-width:.4}
+.plane-tail{fill:#1d3866;stroke:color-mix(in srgb,#0f2140 calc(var(--flight-daylight,1) * 100%),#8fb3e3);stroke-width:.6}
+.plane-fin{fill:#2b4d82}
+.plane-canopy{fill:#a9cff2;stroke:#6f9fcf;stroke-width:.6}
+.plane-canopy-shine{fill:none;stroke:rgba(255,255,255,.85);stroke-width:1;stroke-linecap:round}
+.plane-lights{--night:calc(1 - var(--flight-daylight,1))}
+.nav-port,.nav-stbd{opacity:calc(.08 + .92 * var(--night))}
+.nav-strobe{opacity:0;animation:plane-strobe 2s linear infinite;animation-play-state:paused}
+@keyframes plane-strobe{0%,4%{opacity:calc(.15 + .85 * var(--night))}5%,11%{opacity:0}12%,15%{opacity:calc(.15 + .85 * var(--night))}16%,100%{opacity:0}}
+.flight-running .plane-glint,.flight-running .plane-prop,.flight-running .nav-strobe{animation-play-state:running}
+.motion-suspended .plane-glint,.motion-suspended .plane-prop,.motion-suspended .nav-strobe,.motion-suspended .sky-stars i{animation-play-state:paused!important}
+
+/* Sky: sun and moon on an arc, dusk glow, twinkling stars */
+.polish .flight-sun,.polish .flight-stars{display:none}
+.sky-dusk,.sky-stars,.sky-sun,.sky-moon{position:absolute;pointer-events:none}
+.sky-dusk{inset:0;opacity:var(--dusk,0);background:linear-gradient(to top,rgba(255,126,82,.5),rgba(255,170,116,.22) 30%,rgba(255,200,150,0) 60%)}
+.sky-stars{inset:0;opacity:calc(1 - var(--flight-daylight,1))}
+.sky-stars i{position:absolute;left:0;top:0;width:1.6px;height:1.6px;border-radius:50%;animation:sky-twinkle 5.2s ease-in-out -2s infinite alternate;animation-play-state:paused}
+.sky-stars i:nth-child(2){animation-duration:3.4s;animation-delay:-1s}
+.flight-running .sky-stars i{animation-play-state:running}
+@keyframes sky-twinkle{from{opacity:1}to{opacity:.3}}
+.sky-sun{left:var(--sun-x,80%);top:var(--sun-y,22%);width:clamp(54px,5.4vw,90px);aspect-ratio:1;translate:-50% -50%;border-radius:50%;opacity:var(--sun-vis,0);
+  background:radial-gradient(circle,#fffef7 0 30%,var(--sun-color,#ffe7ad) 35%,transparent 70%);
+  box-shadow:0 0 110px 46px color-mix(in srgb,var(--sun-color,#ffe7ad) 30%,transparent)}
+.sky-moon{left:var(--moon-x,20%);top:var(--moon-y,22%);width:clamp(26px,2.4vw,40px);aspect-ratio:1;translate:-50% -50%;border-radius:50%;opacity:var(--moon-vis,0);
+  background:radial-gradient(circle at 38% 36%,#fbfcff,#dfe6f0 60%,#c3cddc);
+  box-shadow:0 0 50px 14px rgba(200,216,242,.16),inset -6px -4px 0 rgba(140,158,186,.32)}
+
+/* Mission HUD (replaces the bare hour counter) */
+.flight-hud{display:none;position:absolute;right:var(--pad);bottom:clamp(20px,3.4vh,40px);width:296px;padding:14px 16px 16px;border-radius:16px;
+  color:var(--flight-fg);background:color-mix(in srgb,var(--flight-bg) 68%,transparent);
+  -webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);
+  border:1px solid color-mix(in srgb,var(--flight-fg) 13%,transparent);box-shadow:0 18px 50px rgba(8,14,24,.14);
+  font-variant-numeric:tabular-nums;opacity:var(--hud-opacity,1);transition:opacity .4s ease}
+.motion-ready .flight-hud{display:block}
+.hud-top{display:flex;justify-content:space-between;gap:12px;font-size:9.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.hud-top>span:first-child{opacity:.62}
+.hud-top b{font-weight:600}
+.hud-main{display:flex;align-items:flex-end;justify-content:space-between;margin:9px 0 12px}
+.hud-main strong{font-family:var(--font-display);font-size:48px;line-height:.86;font-weight:600;letter-spacing:-.05em}
+.hud-main small{margin-left:3px;font-size:.36em;letter-spacing:0;opacity:.6}
+.hud-main em{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border-radius:999px;font-size:10.5px;font-style:normal;font-weight:600;letter-spacing:.04em;
+  background:color-mix(in srgb,var(--flight-fg) 9%,transparent)}
+.hud-main em::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--hud-dot,#f2b544);box-shadow:0 0 9px var(--hud-dot,#f2b544)}
+.hud-track{position:relative;height:3px;margin:0 0 25px;border-radius:3px;background:color-mix(in srgb,var(--flight-fg) 14%,transparent)}
+.hud-track i{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,var(--sun),var(--sun-soft));transform:scaleX(var(--flight-progress,0));transform-origin:0 50%}
+.hud-record{position:absolute;left:81.5%;top:-4px;width:1.5px;height:11px;background:currentColor;opacity:.8}
+.hud-record b{position:absolute;top:14px;left:50%;translate:-50% 0;white-space:nowrap;font-size:9.5px;font-weight:500;letter-spacing:.03em;opacity:.75}
+.record-passed .hud-record{background:var(--sun);opacity:1;box-shadow:0 0 10px var(--sun)}
+.record-passed .hud-record b{opacity:1}
+.hud-meters{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.hud-meter{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:6px 8px;font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
+.hud-meter span{grid-area:1/1;opacity:.62}
+.hud-meter b{grid-area:1/2;justify-self:end;font-weight:600;letter-spacing:0}
+.hud-meter i{grid-column:1/-1;grid-row:2;position:relative;height:3px;overflow:hidden;border-radius:3px;background:color-mix(in srgb,var(--flight-fg) 13%,transparent)}
+.hud-meter i::after{content:"";position:absolute;inset:0;border-radius:inherit;transform-origin:0 50%}
+.hud-solar i::after{background:var(--sun);transform:scaleX(var(--hud-solar,0))}
+.hud-battery i::after{background:#4fcf92;transform:scaleX(var(--hud-battery,.4))}
+@media(max-width:900px){
+  .flight-hud{right:12px;bottom:14px;width:auto;min-width:92px;padding:8px 10px 10px;border-radius:12px}
+  .hud-top,.hud-meters,.hud-record b,.hud-main em{display:none}
+  .hud-main{margin:0 0 9px}
+  .hud-main strong{font-size:30px}
+  .hud-main em{padding:4px 8px;font-size:9.5px}
+  .hud-track{margin:0}
+}
+
+/* A tiny aircraft rides the scroll-progress bar */
+.scroll-plane{position:fixed;z-index:96;top:-5px;left:0;width:22px;height:18px;pointer-events:none;
+  transform:translate3d(calc(var(--scroll,0) * 100vw - 35%),0,0) rotate(90deg);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 190'%3E%3Cg fill='%23ffe1a1'%3E%3Cpath d='M120 69.5L16 71Q5 71.6 4.6 77.2Q5 83 15.5 84.2L120 88.6L224.5 84.2Q235 83 235.4 77.2Q235 71.6 224 71Z'/%3E%3Cpath d='M76 46h12v58H76zM152 46h12v58h-12zM80 100h4v72h-4zM156 100h4v72h-4zM66 162h32v9H66zM142 162h32v9h-32z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+  filter:drop-shadow(0 0 4px rgba(242,181,68,.8));opacity:calc(min(1, var(--scroll,0) * 40))}
+@media(prefers-reduced-motion:reduce){.scroll-plane{display:none}}
+
 /* ---------- Page-to-page transitions (supporting browsers) ---------- */
 @view-transition{navigation:auto}
 .site-header{view-transition-name:site-header}
