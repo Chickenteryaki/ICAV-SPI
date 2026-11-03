@@ -418,6 +418,84 @@
     requestFlight();
   }
 
+  /* ---------- Homepage hero: the aircraft flies a dotted flight path ---------- */
+  const homeHero = document.querySelector('.home-hero');
+  if (homeHero && motion()) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('class', 'hero-path'); svg.setAttribute('viewBox', '0 0 1000 600');
+    svg.setAttribute('preserveAspectRatio', 'none'); svg.setAttribute('aria-hidden', 'true');
+    const d = 'M -60 470 C 160 470, 300 250, 520 300 S 800 170, 1060 70';
+    svg.innerHTML = `<path d="${d}"/><path class="hero-trail" d="${d}"/>`;
+    (homeHero.querySelector('.shade') || homeHero.firstElementChild).after(svg);
+    const [guide, trail] = svg.querySelectorAll('path');
+    const plane = document.createElement('div');
+    plane.className = 'hero-plane'; plane.setAttribute('aria-hidden', 'true');
+    plane.innerHTML = '<span>ICAV SPI</span>';
+    homeHero.append(plane);
+    const tag = plane.firstChild;
+    const total = guide.getTotalLength();
+    trail.style.strokeDasharray = `${total} ${total}`;
+    const LOOP = 16000, START = performance.now() + 1800;   // wait for the hero entrance
+    let heroVisible = true;
+    const fly = now => {
+      if (!heroVisible || !motion()) return;
+      const t = (Math.max(0, now - START) % LOOP) / LOOP;
+      const travel = clamp(t / .8, 0, 1);
+      const eased = travel < .5 ? 2 * travel * travel : 1 - (-2 * travel + 2) ** 2 / 2;
+      const len = eased * total;
+      const r = homeHero.getBoundingClientRect();
+      const sx = r.width / 1000, sy = r.height / 600;
+      const p = guide.getPointAtLength(len), q = guide.getPointAtLength(Math.min(total, len + 2));
+      const angle = Math.atan2((q.y - p.y) * sy, (q.x - p.x) * sx) * 180 / Math.PI + 90;
+      plane.style.transform = `translate(${(p.x * sx - 24).toFixed(1)}px, ${(p.y * sy - 19).toFixed(1)}px) rotate(${angle.toFixed(1)}deg)`;
+      tag.style.transform = `rotate(${(-angle).toFixed(1)}deg)`;
+      const fade = t < .8 ? 1 : 1 - (t - .8) / .2;
+      plane.style.opacity = String((now > START && travel > 0 && travel < 1 ? 1 : 0) * fade);
+      trail.style.strokeDashoffset = String(total - len);
+      trail.style.opacity = String(fade);
+      requestAnimationFrame(fly);
+    };
+    if (hasIO) new IntersectionObserver(e => { const was = heroVisible; heroVisible = e[0].isIntersecting; if (heroVisible && !was) requestAnimationFrame(fly); }).observe(homeHero);
+    requestAnimationFrame(fly);
+  }
+
+  /* ---------- "From workshop to airfield": vertical scroll drives the strip sideways ---------- */
+  const film = document.querySelector('.film');
+  if (film && motion()) {
+    const filmTrack = film.querySelector('.film-track');
+    const filmImgs = [...filmTrack.querySelectorAll('img')];
+    const desktop = matchMedia('(min-width: 901px)');
+    let distance = 0;
+    const measureFilm = () => {
+      film.classList.toggle('film-pinned', desktop.matches);
+      if (!desktop.matches) { film.style.height = ''; return; }
+      distance = Math.max(0, filmTrack.scrollWidth - innerWidth);
+      film.style.height = `${innerHeight + distance}px`;
+    };
+    const updateFilm = () => {
+      if (!desktop.matches) return;
+      const r = film.getBoundingClientRect();
+      if (r.bottom < -50 || r.top > innerHeight + 50) return;
+      const p = clamp(-r.top / Math.max(1, distance), 0, 1);
+      film.style.setProperty('--film-x', `${(-p * distance).toFixed(1)}px`);
+      film.style.setProperty('--film', p.toFixed(4));
+      filmImgs.forEach(img => {
+        const b = img.parentElement.getBoundingClientRect();
+        if (b.right < 0 || b.left > innerWidth) return;
+        img.style.setProperty('--px', `${(-((b.left + b.width / 2 - innerWidth / 2) / innerWidth) * 40).toFixed(1)}px`);
+      });
+    };
+    let filmFrame = 0;
+    const requestFilm = () => { if (!filmFrame) filmFrame = requestAnimationFrame(() => { filmFrame = 0; updateFilm(); }); };
+    measureFilm(); updateFilm();
+    addEventListener('scroll', requestFilm, { passive: true });
+    addEventListener('resize', () => { measureFilm(); requestFilm(); });
+    addEventListener('load', () => { measureFilm(); requestFilm(); });
+    desktop.addEventListener('change', () => { measureFilm(); requestFilm(); });
+    filmImgs.forEach(img => img.addEventListener('load', () => { measureFilm(); requestFilm(); }, { once: true }));
+  }
+
   /* ---------- If the visitor switches on "reduce motion", settle everything ---------- */
   reduced.addEventListener('change', () => {
     syncMotion();

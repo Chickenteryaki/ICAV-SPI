@@ -349,3 +349,94 @@ body{font-family:var(--font-text);font-feature-settings:"cv11","ss01";text-rende
   .pr{opacity:1!important;translate:none!important}
   .polish .site-header{transition:none}
 }
+
+/* ==========================================================================
+   Hangar — interactive 3D model of the CAD (Aircraft page, hangar.js)
+   ========================================================================== */
+.hangar{padding-bottom:clamp(60px,7vw,110px)}
+.hangar-head{display:grid;grid-template-columns:1fr minmax(260px,440px);gap:40px;align-items:end;margin-bottom:clamp(30px,4vw,56px)}
+.hangar-head .lead{color:#b9b8b2}
+.hangar-stage{--hangar-warm:0;position:relative;height:clamp(460px,78vh,820px);border-radius:24px;overflow:hidden;isolation:isolate;
+  background:radial-gradient(120% 85% at 50% 0%,
+    color-mix(in srgb,#f6dcb8 calc(var(--hangar-warm) * 100%),#eef2f5),
+    color-mix(in srgb,#b88f74 calc(var(--hangar-warm) * 100%),#c3ced8));
+  transition:background .6s ease;color:#16202b}
+.hangar-stage.hangar-bp{background:radial-gradient(120% 85% at 50% 0%,#0d2342,#06101f);color:#d7ecff}
+.hangar-stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:pan-y;outline:none}
+.hangar-stage.hangar-grab canvas{cursor:grabbing}
+.hangar-stage canvas:focus-visible{box-shadow:inset 0 0 0 2px var(--sun)}
+.hangar-status{position:absolute;inset:0;display:grid;place-items:center;margin:0;font-size:14px;letter-spacing:.04em;opacity:.7;pointer-events:none}
+.hangar-ready .hangar-status:empty{display:none}
+.hangar-specs{position:absolute;left:24px;top:22px;margin:0;display:flex;gap:28px;pointer-events:none}
+.hangar-specs dt{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;opacity:.6}
+.hangar-specs dd{margin:4px 0 0;font-family:var(--font-display);font-size:clamp(26px,2.6vw,38px);font-weight:600;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.hangar-legend{position:absolute;right:20px;top:18px;margin:0;padding:0;list-style:none;display:grid;gap:4px;justify-items:end}
+.hangar-legend button{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:0;border-radius:999px;background:color-mix(in srgb,currentColor 7%,transparent);color:inherit;font-size:12px;cursor:pointer;transition:background .25s}
+.hangar-legend button:hover,.hangar-legend button:focus-visible{background:color-mix(in srgb,currentColor 16%,transparent)}
+.hangar-legend i{width:10px;height:10px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+.hangar-legend small{opacity:.6}
+.hangar-hint{position:absolute;left:0;right:0;bottom:78px;margin:0;text-align:center;font-size:11px;letter-spacing:.08em;opacity:.55;pointer-events:none;transition:opacity .4s}
+.hangar-grab .hangar-hint{opacity:0}
+.hangar-bar{position:absolute;left:50%;bottom:18px;translate:-50% 0;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;width:max-content;max-width:calc(100% - 24px)}
+.hangar-group,.hangar-sun{display:flex;align-items:center;gap:2px;padding:4px;border-radius:999px;
+  background:color-mix(in srgb,#ffffff 62%,transparent);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);
+  box-shadow:0 8px 26px rgba(10,20,30,.12),inset 0 0 0 1px rgba(255,255,255,.5)}
+.hangar-bp .hangar-group,.hangar-bp .hangar-sun{background:rgba(10,30,58,.7);box-shadow:inset 0 0 0 1px rgba(127,214,255,.2)}
+.hangar-group button{border:0;background:none;color:inherit;font-size:12.5px;font-weight:500;padding:8px 13px;border-radius:999px;cursor:pointer;transition:background .25s,color .25s}
+.hangar-group button:hover{background:color-mix(in srgb,currentColor 10%,transparent)}
+.hangar-group button[aria-pressed="true"]{background:#0e1620;color:#fff}
+.hangar-bp .hangar-group button[aria-pressed="true"]{background:#7fd6ff;color:#06101f}
+.hangar-sun{gap:10px;padding:4px 14px 4px 14px;font-size:12px;font-weight:500}
+.hangar-sun input{width:clamp(90px,12vw,160px);accent-color:var(--sun)}
+.hangar-sun b{font-variant-numeric:tabular-nums;font-weight:600;min-width:38px}
+.hangar-nogl .hangar-bar,.hangar-nogl .hangar-hint,.hangar-nogl .hangar-specs{display:none}
+@media(max-width:900px){
+  .hangar-head{grid-template-columns:1fr}
+  .hangar-stage{height:min(78vh,620px);border-radius:18px}
+  .hangar-legend{display:none}
+  .hangar-hint{bottom:auto;top:84px}
+  .hangar-specs{left:16px;top:14px;gap:18px}
+  .hangar-bar{bottom:10px;gap:6px}
+  .hangar-group button{padding:7px 10px;font-size:12px}
+}
+
+/* ==========================================================================
+   Homepage hero: the aircraft flies a dotted flight path across the photo
+   ========================================================================== */
+.hero-path{position:absolute;inset:0;z-index:2;pointer-events:none;width:100%;height:100%;overflow:visible}
+.hero-path path{fill:none;stroke:rgba(255,255,255,.55);stroke-width:1.4;stroke-dasharray:2 8;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.hero-path .hero-trail{stroke:var(--sun);stroke-dasharray:none;stroke-width:1.6;filter:drop-shadow(0 0 5px rgba(242,181,68,.85))}
+.hero-plane{position:absolute;z-index:3;left:0;top:0;width:48px;aspect-ratio:240/190;pointer-events:none;opacity:0;will-change:transform,opacity;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 190'%3E%3Cpath fill='%23ffffff' d='M120 69.5L16 71Q5 71.6 4.6 77.2Q5 83 15.5 84.2L120 88.6L224.5 84.2Q235 83 235.4 77.2Q235 71.6 224 71Z'/%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M76 46h12v58H76zM152 46h12v58h-12zM80.7 100h2.6v72h-2.6zM156.7 100h2.6v72h-2.6zM66 162h32v9H66zM142 162h32v9h-32z'/%3E%3C/g%3E%3Cpath fill='%23a9cff2' d='M120 56q5.4 3.5 5.2 14-.6 12-5.2 18.5-4.6-6.5-5.2-18.5-.2-10.5 5.2-14z'/%3E%3C/svg%3E") center/contain no-repeat;
+  filter:drop-shadow(0 0 7px rgba(242,181,68,.75)) drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.hero-plane span{position:absolute;left:34px;top:-20px;white-space:nowrap;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--sun-soft);text-shadow:0 1px 6px rgba(0,0,0,.6)}
+@media(max-width:900px){.hero-path,.hero-plane{display:none}}
+
+/* ==========================================================================
+   "From workshop to airfield" — pinned horizontal filmstrip (homepage)
+   ========================================================================== */
+.film{position:relative;background:var(--ink);color:#f2f0ea}
+.film-pin{position:relative;padding:clamp(90px,10vw,140px) 0 70px}
+.film-head{padding:0 var(--pad);margin-bottom:46px}
+.film-head .display em{font-style:normal;color:var(--sun)}
+.film-head .display em .wi{background:linear-gradient(100deg,var(--sun-soft),var(--sun) 60%,#e48a3a);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.04em}
+.film-track{display:flex;gap:clamp(14px,1.6vw,26px);padding:0 var(--pad);overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--pad);scrollbar-width:none}
+.film-track::-webkit-scrollbar{display:none}
+.film-frame{flex:none;width:clamp(260px,30vw,460px);margin:0;scroll-snap-align:start}
+.film-frame:nth-child(even){margin-top:clamp(30px,6vh,70px)}
+.film-img{aspect-ratio:4/5;overflow:hidden;border-radius:16px;background:#1b1712}
+.film-frame:nth-child(3n+2) .film-img{aspect-ratio:4/3.2}
+.film-img img{height:100%;object-fit:cover;transform:translate3d(var(--px,0px),0,0) scale(1.18)}
+.film-frame figcaption{margin-top:14px;font-size:17px;letter-spacing:-.01em}
+.film-frame figcaption span{display:block;margin-bottom:4px;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--sun)}
+.film-progress{margin:44px var(--pad) 0;height:2px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.film-progress i{display:block;height:100%;background:linear-gradient(90deg,var(--sun),var(--sun-soft));transform:scaleX(var(--film,0));transform-origin:0 50%}
+.film-pinned .film-pin{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;padding:70px 0 40px;overflow:hidden}
+.film-pinned .film-track{overflow:visible;scroll-snap-type:none;width:max-content;transform:translate3d(var(--film-x,0px),0,0);will-change:transform}
+.film-pinned .film-head{margin-bottom:28px}
+.film-pinned .film-head .display{font-size:clamp(48px,6vw,96px)}
+.film-pinned .film-frame{--fh:min(48vh,500px);width:calc(var(--fh) * .8)}
+.film-pinned .film-frame:nth-child(3n+2){width:calc(var(--fh) * 1.3)}
+.film-pinned .film-img,.film-pinned .film-frame:nth-child(3n+2) .film-img{aspect-ratio:auto;height:var(--fh)}
+.film-pinned .film-frame:nth-child(even){margin-top:4vh}
+.film-pinned .film-progress{margin-top:28px}
