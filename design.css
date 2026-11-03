@@ -1,0 +1,87 @@
+/* ==========================================================================
+   Design B — "Golden Hour"
+   Cinematic and editorial: warm grade, film grain, light italic accents,
+   inertial scrolling, words that light up as you read, a pinned filmstrip.
+   ========================================================================== */
+@font-face{font-family:"Inter Display Italic";src:url("assets/fonts/inter-display-300-italic.woff") format("woff");font-weight:300;font-style:italic;font-display:swap}
+:root{--paper:#f4eee2;--ink:#0c0a08;--gold:#f2b544;--gold-2:#ffd98c;--ember:#ff8a4c}
+html{scroll-behavior:auto}
+body{background:var(--ink)}
+.paper{background:var(--paper)}
+.black,.marquee,.footer{background-color:var(--ink)}
+.marquee::before{background:linear-gradient(90deg,var(--ink),transparent)}
+.marquee::after{background:linear-gradient(270deg,var(--ink),transparent)}
+.polish .site-header::after{background:rgba(14,11,8,.72)}
+
+/* Light italic accents with a warm gradient */
+h1 em,.display em,.goal-number span{font-family:"Inter Display Italic",var(--font-display);font-style:italic;font-weight:300;letter-spacing:-.035em}
+h1 em .wi,.display em .wi,h1 em:not(:has(.wi)),.display em:not(:has(.wi)){
+  background:linear-gradient(100deg,var(--gold-2) 0%,var(--gold) 45%,var(--ember) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.06em}
+.paper .display em .wi,.white .display em .wi,.flight-story .display em .wi{
+  background-image:linear-gradient(100deg,#c98a1c 0%,#b8620f 60%,#a8431a 100%)}
+.flight-story .display em .wi{background-image:linear-gradient(100deg,#d99a2b,#c46a1c 70%,#b04a20)}
+
+/* Film grain over everything */
+.gh-grain{position:fixed;inset:-50%;z-index:110;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1.2 -.1'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E")}
+.polish-motion .gh-grain{animation:gh-grain .9s steps(6) infinite}
+@keyframes gh-grain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-5%)}60%{transform:translate(-6%,-2%)}80%{transform:translate(5%,4%)}100%{transform:translate(-2%,6%)}}
+
+/* Warm photographic grade */
+.page-hero>img,.home-hero-slide img,.chapter-photo img,.photo img,.gh-img img,.team-gallery img,.team-life-main img,.team-review-image img,.team-testday-photo img{filter:saturate(1.06) contrast(1.04) sepia(.1)}
+
+/* ---------- Hero: letterbox opens, light leak drifts ---------- */
+.gh-bars::before,.gh-bars::after{content:"";position:absolute;left:0;right:0;z-index:6;height:13vh;background:#000;pointer-events:none}
+.gh-bars::before{top:0}.gh-bars::after{bottom:0}
+.polish-motion .gh-bars::before{animation:gh-bar-top 1.8s cubic-bezier(.77,0,.18,1) .2s both}
+.polish-motion .gh-bars::after{animation:gh-bar-bot 1.8s cubic-bezier(.77,0,.18,1) .2s both}
+@keyframes gh-bar-top{from{transform:translateY(0)}to{transform:translateY(-100%)}}
+@keyframes gh-bar-bot{from{transform:translateY(0)}to{transform:translateY(100%)}}
+.polish:not(.polish-motion) .gh-bars::before,.polish:not(.polish-motion) .gh-bars::after{display:none}
+.gh-leak{position:absolute;inset:-20%;z-index:1;pointer-events:none;mix-blend-mode:screen;opacity:.55;
+  background:radial-gradient(40% 35% at 20% 30%,rgba(255,150,70,.55),transparent 70%),radial-gradient(30% 30% at 80% 70%,rgba(255,210,120,.35),transparent 70%)}
+.polish-motion .gh-leak{animation:gh-leak 16s ease-in-out infinite alternate}
+@keyframes gh-leak{from{transform:translate3d(-6%,-3%,0) rotate(-4deg)}to{transform:translate3d(8%,5%,0) rotate(6deg)}}
+.page-hero .shade{z-index:1}
+.page-hero .hero-copy,.home-hero-content{z-index:5}
+.polish .button{border-color:rgba(255,217,140,.7)}
+.polish .button::before{background:linear-gradient(100deg,var(--gold-2),var(--gold))}
+
+/* ---------- Words light up as you read ---------- */
+.gh-lit .gl{opacity:.2;transition:opacity .35s ease}
+.gh-lit .gl.on{opacity:1}
+
+/* ---------- Curtain photo reveals, softer corners ---------- */
+.chapter-photo-window,.photo,.team-life-main,.team-review-image,.team-partner-image,.team-testday-photo{border-radius:18px;overflow:hidden}
+.motion-enabled .is-revealed.chapter-photo .chapter-photo-window{animation:gh-curtain 1.5s cubic-bezier(.77,0,.18,1) both}
+@keyframes gh-curtain{from{clip-path:inset(50% 8% 50% 8% round 18px)}to{clip-path:inset(0 0 0 0 round 18px)}}
+.polish-motion .chapter-photo-window img{transform:translate3d(0,var(--py,0px),0) scale(1.14)}
+
+/* ---------- Pinned horizontal filmstrip ---------- */
+.gh-film{position:relative;background:var(--ink);color:#f4eee2}
+.gh-film-pin{position:relative;padding:clamp(90px,10vw,140px) 0 70px}
+.gh-film-head{padding:0 var(--pad);margin-bottom:46px}
+.gh-film-track{display:flex;gap:clamp(14px,1.6vw,26px);padding:0 var(--pad);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.gh-film-track::-webkit-scrollbar{display:none}
+.gh-frame{flex:none;width:clamp(260px,30vw,460px);margin:0;scroll-snap-align:start}
+.gh-frame:nth-child(even){margin-top:clamp(30px,6vh,70px)}
+.gh-img{aspect-ratio:4/5;overflow:hidden;border-radius:16px;background:#1b1712}
+.gh-frame:nth-child(3n+2) .gh-img{aspect-ratio:4/3.2}
+.gh-img img{height:100%;object-fit:cover;transform:translate3d(var(--px,0px),0,0) scale(1.18);transition:transform .2s linear}
+.gh-frame figcaption{margin-top:14px;font-size:17px;letter-spacing:-.01em}
+.gh-frame figcaption span{display:block;margin-bottom:4px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.gh-film-progress{margin:44px var(--pad) 0;height:2px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.gh-film-progress i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-2));transform:scaleX(var(--film,0));transform-origin:0 50%}
+/* When JS pins it, vertical scrolling drives the strip sideways */
+.gh-pinned .gh-film-pin{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;padding:70px 0 40px;overflow:hidden}
+.gh-pinned .gh-film-track{overflow:visible;scroll-snap-type:none;width:max-content;transform:translate3d(var(--film-x,0px),0,0);will-change:transform}
+
+@media(prefers-reduced-motion:reduce){.gh-grain,.gh-leak{display:none}.gh-lit .gl{opacity:1}}
+.gh-pinned .gh-film-head{margin-bottom:28px}
+.gh-pinned .gh-film-head .display{font-size:clamp(48px,6vw,96px)}
+.gh-pinned .gh-frame{--fh:min(48vh,500px);width:calc(var(--fh) * .8)}
+.gh-pinned .gh-frame:nth-child(3n+2){width:calc(var(--fh) * 1.3)}
+.gh-pinned .gh-img,.gh-pinned .gh-frame:nth-child(3n+2) .gh-img{aspect-ratio:auto;height:var(--fh)}
+.gh-pinned .gh-frame:nth-child(even){margin-top:4vh}
+.gh-pinned .gh-film-progress{margin-top:28px}
