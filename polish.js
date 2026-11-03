@@ -130,7 +130,7 @@
 
   /* ---------- Staggered reveals for lists and cards ---------- */
   const groups = [
-    '.goal-facts > div', '.home-explore .row', '.timeline-row', '.stats .stat',
+    '.goal-facts > div', '.home-explore .row', '.timeline-row', '.stats .stat', '.crew-card',
     '.news-list > *'
   ];
   const revealItems = [];
@@ -495,6 +495,20 @@
     desktop.addEventListener('change', () => { measureFilm(); requestFilm(); });
     filmImgs.forEach(img => img.addEventListener('load', () => { measureFilm(); requestFilm(); }, { once: true }));
   }
+
+  /* ---------- "Watch it fly": load the LinkedIn player only when asked ---------- */
+  document.querySelectorAll('.watch-frame[data-embed]').forEach(frame => {
+    frame.querySelector('.watch-play')?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = frame.dataset.embed;
+      iframe.title = 'ICAV SPI flight test video on LinkedIn';
+      iframe.allow = 'autoplay; fullscreen; encrypted-media; picture-in-picture';
+      iframe.allowFullscreen = true;
+      frame.classList.add('is-playing');
+      frame.replaceChildren(iframe);
+      iframe.focus();
+    });
+  });
 
   /* ---------- If the visitor switches on "reduce motion", settle everything ---------- */
   reduced.addEventListener('change', () => {
